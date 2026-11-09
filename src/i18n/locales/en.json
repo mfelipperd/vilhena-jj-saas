@@ -701,6 +701,24 @@
       "expert": "Expert",
       "professional": "Professional",
       "elite": "Elite"
+    },
+    "vilhena": {
+      "sectionTitle": "Team details",
+      "category": "Category",
+      "select": "Select",
+      "guardianName": "Mother/guardian name",
+      "guardianNamePlaceholder": "Required for minors",
+      "bjjStartDate": "Jiu-jitsu start date",
+      "dueDay": "Monthly fee due day",
+      "kimonoSize": "Gi size",
+      "beltSize": "Belt size",
+      "categories": {
+        "kids": "Kids",
+        "juvenil": "Juvenile",
+        "adulto": "Adult",
+        "master": "Master"
+      },
+      "dueDayPlaceholder": "1–31"
     }
   },
   "months": {
@@ -719,13 +737,13 @@
   },
   "landing": {
     "hero": {
-      "title1": "HAMARR",
+      "title1": "VILHENA",
       "title2": "JIU-JITSU GI",
       "title3": "JIU-JITSU NO GI",
       "title4": "MMA",
-      "description": "Hamarr, connects students and instructors in a single platform, strengthening discipline, commitment and growth on and off the mat.",
+      "description": "Vilhena, connects students and instructors in a single platform, strengthening discipline, commitment and growth on and off the mat.",
       "getStarted": "GET STARTED",
-      "followUs": "Follow @hamarr_jiujitsu_mma"
+      "followUs": "Follow @ctvilhenacwb"
     },
     "stats": {
       "studentsManaged": "Students Managed",
@@ -898,7 +916,7 @@
     "close": "Close",
     "details": "Details",
     "noData": "No data",
-    "appName": "Hamarr",
+    "appName": "Vilhena",
     "navigation": "Navigation",
     "account": "Account",
     "searchPlaceholder": "Search students, classes...",
@@ -934,7 +952,7 @@
     "contactAdmin": "If you have questions or need to speed up the process, contact the gym administrator directly.",
     "backToLogin": "Back to login",
     "checkStatus": "Check status",
-    "footer": "Hamarr Martial Arts Manager"
+    "footer": "Equipe Vilhena"
   },
   "pendingApprovals": {
     "noPending": "No pending accounts",
