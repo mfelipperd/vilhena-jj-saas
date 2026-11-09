@@ -7,7 +7,7 @@ import { createContext, useContext, useState, useEffect } from 'react';
 import type { ReactNode } from 'react';
 import { apiClient } from '../lib/api-client';
 
-const AUTH_SESSION_HINT_KEY = 'hamarr:auth-session';
+const AUTH_SESSION_HINT_KEY = 'vilhena:auth-session';
 
 function hasAuthSessionHint(): boolean {
   if (typeof window === 'undefined') return false;

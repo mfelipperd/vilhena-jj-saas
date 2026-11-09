@@ -2,13 +2,11 @@
   try {
     var storedTheme = window.localStorage.getItem('theme');
     var prefersLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
-    var resolvedTheme = storedTheme === 'light'
-      ? 'light'
-      : storedTheme === 'dark'
+    var resolvedTheme = storedTheme === 'dark'
+      ? 'dark'
+      : storedTheme === 'system' && !prefersLight
         ? 'dark'
-        : storedTheme === 'system' && prefersLight
-          ? 'light'
-          : 'dark';
+        : 'light';
     var root = document.documentElement;
     root.setAttribute('data-theme', resolvedTheme);
     root.classList.remove('light', 'dark');

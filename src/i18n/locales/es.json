@@ -723,6 +723,24 @@
       "expert": "Experto",
       "professional": "Profesional",
       "elite": "Élite"
+    },
+    "vilhena": {
+      "sectionTitle": "Datos del equipo",
+      "category": "Categoría",
+      "select": "Seleccione",
+      "guardianName": "Nombre de la madre/responsable",
+      "guardianNamePlaceholder": "Obligatorio para menores",
+      "bjjStartDate": "Inicio en jiu-jitsu",
+      "dueDay": "Día de vencimiento de la mensualidad",
+      "kimonoSize": "Talla del kimono",
+      "beltSize": "Talla del cinturón",
+      "categories": {
+        "kids": "Kids",
+        "juvenil": "Juvenil",
+        "adulto": "Adulto",
+        "master": "Master"
+      },
+      "dueDayPlaceholder": "1–31"
     }
   },
   "months": {
@@ -862,13 +880,13 @@
   },
   "landing": {
     "hero": {
-      "title1": "HAMARR",
+      "title1": "VILHENA",
       "title2": "JIU-JITSU GI",
       "title3": "JIU-JITSU NO GI",
       "title4": "MMA",
-      "description": "Hamarr, conecta a alumnos e instructores en una sola plataforma, fortaleciendo la disciplina, el compromiso y el crecimiento dentro y fuera del tatami.",
+      "description": "Vilhena, conecta a alumnos e instructores en una sola plataforma, fortaleciendo la disciplina, el compromiso y el crecimiento dentro y fuera del tatami.",
       "getStarted": "COMENZAR",
-      "followUs": "Síguenos @hamarr_jiujitsu_mma"
+      "followUs": "Síguenos @ctvilhenacwb"
     },
     "stats": {
       "studentsManaged": "Estudiantes Gestionados",
@@ -937,7 +955,7 @@
     "close": "Cerrar",
     "details": "Detalles",
     "noData": "Sin datos",
-    "appName": "Hamarr",
+    "appName": "Vilhena",
     "navigation": "Navegación",
     "account": "Cuenta",
     "searchPlaceholder": "Buscar estudiantes, clases...",
@@ -978,7 +996,7 @@
     "contactAdmin": "Si tienes preguntas o necesitas acelerar el proceso, contacta al administrador del gimnasio directamente.",
     "backToLogin": "Volver al inicio de sesión",
     "checkStatus": "Verificar estado",
-    "footer": "Hamarr Martial Arts Manager"
+    "footer": "Equipe Vilhena"
   },
   "pendingApprovals": {
     "noPending": "Sin cuentas pendientes",
@@ -1349,9 +1367,9 @@
     }
   },
   "androidInstallPrompt": {
-    "title": "Instala HAMARR en tu Android",
+    "title": "Instala VILHENA en tu Android",
     "heading": "Obtén la app de Android (.apk)",
-    "body": "Puedes instalar la app HAMARR directamente en Android para acceder rápido desde tu pantalla de inicio.",
+    "body": "Puedes instalar la app VILHENA directamente en Android para acceder rápido desde tu pantalla de inicio.",
     "warning": "Si es tu primera instalación manual, Android puede pedirte permitir instalaciones desde esta fuente.",
     "actions": {
       "later": "Quizás más tarde",

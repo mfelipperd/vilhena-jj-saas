@@ -1,4 +1,4 @@
-package cl.hamarr.app;
+package br.com.vilhena.app;
 
 import com.getcapacitor.BridgeActivity;
 

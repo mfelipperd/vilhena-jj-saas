@@ -19,7 +19,7 @@ Cloudflare edge
         +---- approved external service APIs
 ```
 
-Production is served at `hamarr.cl`. GitHub is the source-control and collaboration surface; deployment to production is intentionally performed from a trusted local maintainer environment rather than from repository Actions.
+Production is served at `suaacademia.com.br`. GitHub is the source-control and collaboration surface; deployment to production is intentionally performed from a trusted local maintainer environment rather than from repository Actions.
 
 ## Trust boundaries
 

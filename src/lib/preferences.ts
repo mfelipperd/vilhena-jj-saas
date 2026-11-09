@@ -1,9 +1,9 @@
 export const APP_PREFERENCE_KEYS = {
-  androidInstallPrompt: 'hamarr_android_install_prompt_enabled',
-  pullToRefresh: 'hamarr_pull_to_refresh_enabled',
+  androidInstallPrompt: 'vilhena_android_install_prompt_enabled',
+  pullToRefresh: 'vilhena_pull_to_refresh_enabled',
 } as const;
 
-export const PREFERENCE_CHANGE_EVENT = 'hamarr:preference-change';
+export const PREFERENCE_CHANGE_EVENT = 'vilhena:preference-change';
 
 export type BooleanPreferenceKey = typeof APP_PREFERENCE_KEYS[keyof typeof APP_PREFERENCE_KEYS];
 

@@ -59,6 +59,12 @@ export class StudentService {
       dateOfBirth: data.dateOfBirth || undefined,
       emergencyContactName: data.emergencyContactName || undefined,
       emergencyContactPhone: data.emergencyContactPhone || undefined,
+      guardianName: data.guardianName || undefined,
+      bjjStartDate: data.bjjStartDate || undefined,
+      kimonoSize: data.kimonoSize || undefined,
+      beltSize: data.beltSize || undefined,
+      dueDay: data.dueDay,
+      category: data.category,
       notes: data.notes || undefined,
     };
     if (data.disciplines && data.disciplines.length > 0) {
@@ -81,6 +87,12 @@ export class StudentService {
     if (data.dateOfBirth !== undefined) payload.dateOfBirth = data.dateOfBirth;
     if (data.emergencyContactName !== undefined) payload.emergencyContactName = data.emergencyContactName;
     if (data.emergencyContactPhone !== undefined) payload.emergencyContactPhone = data.emergencyContactPhone;
+    if (data.guardianName !== undefined) payload.guardianName = data.guardianName;
+    if (data.bjjStartDate !== undefined) payload.bjjStartDate = data.bjjStartDate;
+    if (data.kimonoSize !== undefined) payload.kimonoSize = data.kimonoSize;
+    if (data.beltSize !== undefined) payload.beltSize = data.beltSize;
+    if (data.dueDay !== undefined) payload.dueDay = data.dueDay;
+    if (data.category !== undefined) payload.category = data.category;
     if (data.notes !== undefined) payload.notes = data.notes;
     
     const response = await apiClient.put<{ success: boolean; student: Student }>(`${this.endpoint}/${id}`, payload);

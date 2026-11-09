@@ -12,7 +12,7 @@ import { useAuth } from './AuthContext';
 import { BranchContext, type BranchContextValue } from './branchContext.shared';
 import { invalidateMercadoPagoStatus } from '../hooks/useMercadoPagoStatus';
 
-const BRANCH_STORAGE_KEY = 'hamarr:selected-branch';
+const BRANCH_STORAGE_KEY = 'vilhena:selected-branch';
 const MAIN_BRANCH_ID = 'main';
 
 function readStoredBranchId(): string {

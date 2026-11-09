@@ -701,6 +701,24 @@
       "expert": "Especialista",
       "professional": "Profissional",
       "elite": "Elite"
+    },
+    "vilhena": {
+      "sectionTitle": "Dados da Equipe Vilhena",
+      "category": "Categoria",
+      "select": "Selecione",
+      "guardianName": "Nome da mãe/responsável",
+      "guardianNamePlaceholder": "Obrigatório para menores de idade",
+      "bjjStartDate": "Início no jiu-jítsu",
+      "dueDay": "Dia de vencimento da mensalidade",
+      "kimonoSize": "Tamanho do kimono",
+      "beltSize": "Tamanho da faixa",
+      "categories": {
+        "kids": "Kids",
+        "juvenil": "Juvenil",
+        "adulto": "Adulto",
+        "master": "Master"
+      },
+      "dueDayPlaceholder": "1–31"
     }
   },
   "months": {
@@ -719,13 +737,13 @@
   },
   "landing": {
     "hero": {
-      "title1": "HAMARR",
+      "title1": "VILHENA",
       "title2": "JIU-JITSU GI",
       "title3": "JIU-JITSU NO GI",
       "title4": "MMA",
-      "description": "Hamarr, conecta alunos e instrutores em uma única plataforma, fortalecendo a disciplina, o compromisso e o crescimento dentro e fora do tatame.",
+      "description": "A Equipe Vilhena conecta alunos e instrutores em uma única plataforma, fortalecendo a disciplina, o compromisso e o crescimento dentro e fora do tatame.",
       "getStarted": "COMEÇAR",
-      "followUs": "Siga @hamarr_jiujitsu_mma"
+      "followUs": "Siga @ctvilhenacwb"
     },
     "stats": {
       "studentsManaged": "Alunos Gerenciados",
@@ -882,7 +900,7 @@
     "close": "Fechar",
     "details": "Detalhes",
     "noData": "Sem dados",
-    "appName": "Hamarr",
+    "appName": "Vilhena",
     "navigation": "Navegação",
     "account": "Conta",
     "searchPlaceholder": "Buscar alunos, aulas...",
@@ -918,7 +936,7 @@
     "contactAdmin": "Se você tiver dúvidas ou precisar acelerar o processo, entre em contato com o administrador da academia diretamente.",
     "backToLogin": "Voltar ao login",
     "checkStatus": "Verificar status",
-    "footer": "Hamarr Martial Arts Manager"
+    "footer": "Equipe Vilhena"
   },
   "pendingApprovals": {
     "noPending": "Sem contas pendentes",

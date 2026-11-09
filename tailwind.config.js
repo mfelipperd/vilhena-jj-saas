@@ -8,13 +8,14 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        'inter': ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'],
-        'sans': ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'],
+        'inter': ['DM Sans', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        'sans': ['DM Sans', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        'display': ['Poppins', 'DM Sans', 'sans-serif'],
       },
       colors: {
-        'dojo-red': '#E0022A',
+        'dojo-red': '#E10600',
         'dojo-orange': '#F97316',
-        'dojo-dark': '#0F0F0F',
+        'dojo-dark': '#140808',
       },
       animation: {
         'spin-slow': 'spin 8s linear infinite',
@@ -72,43 +73,33 @@ export default {
       },
     },
   },
+  // NOTE: Tailwind v4 does not load this file unless referenced via @config, so the
+  // live theme tokens are in src/index.css. Kept in sync as the DaisyUI "vilhena" theme.
   daisyui: {
     themes: [
       {
-        dark: {
-          "primary": "#E0022A",
-          "primary-focus": "#B90023",
+        "vilhena": {
+          "primary": "#E10600",
+          "primary-focus": "#B80500",
           "primary-content": "#FFFFFF",
-
-          "secondary": "#F97316",
-          "secondary-focus": "#EA580C",
+          "secondary": "#240F0F",
           "secondary-content": "#FFFFFF",
-
-          "accent": "#FCD34D",
-          "accent-focus": "#FBBF24",
-          "accent-content": "#000000",
-
-          "neutral": "#1F2937",
-          "neutral-focus": "#111827",
-          "neutral-content": "#F3F4F6",
-
-          "base-100": "#0F0F0F",
-          "base-200": "#1A1A1A",
-          "base-300": "#242424",
-          "base-content": "#E5E7EB",
-
-          "info": "#0EA5E9",
+          "accent": "#F2A900",
+          "accent-content": "#240F0F",
+          "neutral": "#240F0F",
+          "neutral-content": "#FAFAFA",
+          "base-100": "#FAFAFA",
+          "base-200": "#F1EDED",
+          "base-300": "#E4DCDC",
+          "base-content": "#240F0F",
+          "info": "#0284C7",
           "info-content": "#FFFFFF",
-
-          "success": "#22C55E",
+          "success": "#1F9D55",
           "success-content": "#FFFFFF",
-
-          "warning": "#F59E0B",
-          "warning-content": "#000000",
-
-          "error": "#DC2626",
+          "warning": "#F2A900",
+          "warning-content": "#240F0F",
+          "error": "#8B0000",
           "error-content": "#FFFFFF",
-
           "--rounded-box": "0.75rem",
           "--rounded-btn": "0.5rem",
           "--rounded-badge": "1.9rem",
@@ -121,40 +112,28 @@ export default {
         },
       },
       {
-        light: {
-          "primary": "#E0022A",
-          "primary-focus": "#B90023",
+        "vilhena-dark": {
+          "primary": "#E10600",
+          "primary-focus": "#B80500",
           "primary-content": "#FFFFFF",
-
-          "secondary": "#F97316",
-          "secondary-focus": "#EA580C",
+          "secondary": "#240F0F",
           "secondary-content": "#FFFFFF",
-
-          "accent": "#F59E0B",
-          "accent-focus": "#D97706",
-          "accent-content": "#1F2937",
-
-          "neutral": "#E5E7EB",
-          "neutral-focus": "#D1D5DB",
-          "neutral-content": "#1F2937",
-
-          "base-100": "#FAFAFA",
-          "base-200": "#F3F4F6",
-          "base-300": "#E5E7EB",
-          "base-content": "#111827",
-
-          "info": "#0284C7",
+          "accent": "#F2A900",
+          "accent-content": "#240F0F",
+          "neutral": "#351C1C",
+          "neutral-content": "#FAFAFA",
+          "base-100": "#140808",
+          "base-200": "#1D0E0E",
+          "base-300": "#271313",
+          "base-content": "#F5EEEE",
+          "info": "#0EA5E9",
           "info-content": "#FFFFFF",
-
-          "success": "#16A34A",
+          "success": "#1F9D55",
           "success-content": "#FFFFFF",
-
-          "warning": "#D97706",
-          "warning-content": "#FFFFFF",
-
-          "error": "#DC2626",
+          "warning": "#F2A900",
+          "warning-content": "#240F0F",
+          "error": "#B80500",
           "error-content": "#FFFFFF",
-
           "--rounded-box": "0.75rem",
           "--rounded-btn": "0.5rem",
           "--rounded-badge": "1.9rem",
@@ -167,7 +146,7 @@ export default {
         },
       },
     ],
-    darkTheme: "dark",
+    darkTheme: "vilhena-dark",
     base: true,
     styled: true,
     utils: true,

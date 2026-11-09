@@ -23,7 +23,7 @@
     "mobile:apk:build:release": "cd android && gradlew.bat assembleRelease",
     "mobile:cap:ios": "pnpm mobile:cap:sync && cap open ios",
     "mobile:twa:doctor": "bubblewrap doctor",
-    "mobile:twa:init": "bubblewrap init --manifest https://hamarr.cl/manifest.webmanifest",
+    "mobile:twa:init": "bubblewrap init --manifest https://suaacademia.com.br/manifest.webmanifest",
     "mobile:twa:build": "bubblewrap build",
     "mobile:twa:update": "bubblewrap update",
     "lint": "eslint .",

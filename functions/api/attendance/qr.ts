@@ -132,7 +132,7 @@ export async function onRequestPost({ request, env }: { request: Request; env: E
 
     // Generate unique QR code value
     const qrId = crypto.randomUUID();
-    const qrCode = `HAMARR-${crypto.randomUUID().toUpperCase().slice(0, 8)}`;
+    const qrCode = `VILHENA-${crypto.randomUUID().toUpperCase().slice(0, 8)}`;
     const now = new Date().toISOString();
 
     await env.DB.prepare(`

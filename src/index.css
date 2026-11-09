@@ -1,5 +1,5 @@
 @import "tailwindcss";
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=Poppins:wght@500;600;700;800&display=swap');
 
 /* ------------------------------------------------------------------ */
 /*  Tailwind v4 dark mode — driven by our [data-theme] attribute      */
@@ -20,17 +20,21 @@
   --color-strike-200: oklch(0.85 0.12 25);
   --color-strike-300: oklch(0.76 0.17 25);
   --color-strike-400: oklch(0.68 0.21 25);
-  --color-strike-500: oklch(0.62 0.24 25);
-  --color-strike-600: oklch(0.55 0.24 25);
-  --color-strike-700: oklch(0.47 0.21 25);
+  --color-strike-500: #E10600; /* Vilhena primary */
+  --color-strike-600: #B80500; /* Vilhena primary-hover */
+  --color-strike-700: #8B0000;
   --color-strike-800: oklch(0.38 0.17 25);
   --color-strike-900: oklch(0.28 0.13 25);
 
   /* Status colors — desaturated for cohesion */
-  --color-success: oklch(0.72 0.16 145);
-  --color-warning: oklch(0.78 0.16 75);
-  --color-danger:  oklch(0.62 0.24 25);
+  --color-success: #1F9D55;
+  --color-warning: #F2A900;
+  --color-danger:  #8B0000;
   --color-info:    oklch(0.72 0.10 230);
+
+  /* Typography — Vilhena */
+  --font-sans: 'DM Sans', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+  --font-display: 'Poppins', 'DM Sans', ui-sans-serif, system-ui, sans-serif;
 
   /* Radius scale */
   --radius-xs: 6px;
@@ -52,10 +56,10 @@
 :root[data-theme="dark"],
 .dark {
   color-scheme: dark;
-  --color-surface-0: oklch(0.08 0 0);   /* canvas */
-  --color-surface-1: oklch(0.12 0 0);   /* card */
-  --color-surface-2: oklch(0.16 0 0);   /* elevated */
-  --color-surface-3: oklch(0.22 0 0);   /* hover */
+  --color-surface-0: #140808;   /* canvas */
+  --color-surface-1: #1D0E0E;   /* card */
+  --color-surface-2: #271313;   /* elevated */
+  --color-surface-3: #351C1C;   /* hover */
   --color-border:        oklch(0.26 0 0 / 0.6);
   --color-border-strong: oklch(0.34 0 0);
   /* Warm-tinted inks (no neutral grey — a touch of red-orange chroma
@@ -75,15 +79,15 @@
    martial arts visual language (paper + ink + red belt). */
 :root[data-theme="light"] {
   color-scheme: light;
-  --color-surface-0: oklch(0.965 0.006 30);   /* canvas — warm rice paper */
-  --color-surface-1: oklch(0.985 0.004 30);   /* card  — lifted paper */
+  --color-surface-0: #FAFAFA;   /* canvas */
+  --color-surface-1: #FFFFFF;   /* card */
   --color-surface-2: oklch(0.945 0.008 30);   /* elevated — panel */
   --color-surface-3: oklch(0.910 0.012 30);   /* hover — ink wash */
   --color-border:        oklch(0.82 0.012 30 / 0.8);
   --color-border-strong: oklch(0.68 0.020 30);
-  --color-ink-primary:   oklch(0.20 0.020 25);   /* deep sumi-e ink */
+  --color-ink-primary:   #240F0F;   /* Vilhena ink */
   --color-ink-secondary: oklch(0.32 0.018 25);
-  --color-ink-muted:     oklch(0.42 0.016 25);
+  --color-ink-muted:     #757575;
   --color-ink-disabled:  oklch(0.62 0.010 25);
   --shadow-card: 0 1px 0 oklch(1 0 0 / 0.6) inset, 0 4px 16px -8px oklch(0.40 0.05 25 / 0.18);
   --shadow-pop:  0 1px 0 oklch(1 0 0 / 0.7) inset, 0 12px 32px -12px oklch(0.40 0.05 25 / 0.24);
@@ -182,16 +186,15 @@ body {
   overscroll-behavior: none;
   background-color: var(--color-surface-0);
   color: var(--color-ink-primary);
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  font-feature-settings: 'cv11', 'ss01';
+  font-family: var(--font-sans);
   font-variant-numeric: tabular-nums;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Inter font family utility */
+/* Legacy utility name kept for existing markup; now maps to DM Sans */
 .font-inter {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-family: var(--font-sans);
 }
 
 /* Theme-aware base utilities — values come from the token block above
@@ -283,14 +286,14 @@ p, span, div {
 }
 
 .btn-primary {
-  background-color: #3b82f6;
+  background-color: #E10600;
   color: #ffffff;
-  border-color: #2563eb;
+  border-color: #B80500;
 }
 
 .btn-primary:hover {
-  background-color: #2563eb;
-  border-color: #1d4ed8;
+  background-color: #B80500;
+  border-color: #8B0000;
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
 
@@ -1289,7 +1292,7 @@ p, span, div {
   width: 100%;
   background-color: transparent !important;
   border: none !important;
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-sans);
   color: var(--color-ink-primary);
 }
 
@@ -1572,4 +1575,10 @@ p, span, div {
 .custom-calendar .react-calendar__navigation button:focus-visible {
   outline: 2px solid #ef4444;
   outline-offset: 2px;
+}
+
+/* Vilhena typography: Poppins for headings, DM Sans (body) everywhere else */
+h1, h2, h3, h4, h5, h6, .font-display {
+  font-family: var(--font-display);
+  letter-spacing: -0.01em;
 }

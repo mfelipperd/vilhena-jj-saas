@@ -110,7 +110,7 @@ export async function onRequestPost({ request, env }: { request: Request; env: E
       items: [
         {
           id: type,
-          title: `Hamarr ${type} payment - ${student.name}`,
+          title: `Vilhena ${type} payment - ${student.name}`,
           description: notes || `Membership payment for ${student.name}`,
           quantity: 1,
           unit_price: Number(amount.toFixed(2)),
@@ -122,7 +122,7 @@ export async function onRequestPost({ request, env }: { request: Request; env: E
       back_urls: { success: successUrl, failure: failureUrl, pending: pendingUrl },
       auto_return: 'approved',
       notification_url: notificationUrl,
-      statement_descriptor: 'HAMARR',
+      statement_descriptor: 'VILHENA',
       metadata: {
         student_id: student.id,
         payment_id: paymentId,

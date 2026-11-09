@@ -11,10 +11,10 @@ if (hasReleaseKeystore) {
 }
 
 android {
-    namespace "cl.hamarr.app"
+    namespace "br.com.vilhena.app"
     compileSdk rootProject.ext.compileSdkVersion
     defaultConfig {
-        applicationId "cl.hamarr.app"
+        applicationId "br.com.vilhena.app"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

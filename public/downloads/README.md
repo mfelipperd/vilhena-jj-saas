@@ -2,11 +2,11 @@
 
 Place your distributable APK file in this folder with the exact name:
 
-- `hamarr-app-latest.apk`
+- `vilhena-app-latest.apk`
 
 Default web prompt URL:
 
-- `/downloads/hamarr-app-latest.apk`
+- `/downloads/vilhena-app-latest.apk`
 
 Optional: override the URL using Vite env variable:
 
@@ -14,4 +14,4 @@ Optional: override the URL using Vite env variable:
 
 Example:
 
-- `VITE_ANDROID_APK_URL=https://hamarr.cl/downloads/hamarr-app-v1.0.0.apk`
+- `VITE_ANDROID_APK_URL=https://suaacademia.com.br/downloads/vilhena-app-v1.0.0.apk`

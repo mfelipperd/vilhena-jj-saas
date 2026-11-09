@@ -34,8 +34,8 @@ This repository now includes:
 - Good backup if TWA constraints arise.
 
 ### Android quick start without store: **Direct APK download**
-- Show in-app popup after login on `hamarr.cl`.
-- Download APK directly from `/downloads/hamarr-app-latest.apk`.
+- Show in-app popup after login on `suaacademia.com.br`.
+- Download APK directly from `/downloads/vilhena-app-latest.apk`.
 - No Play Console required for initial rollout.
 
 ---
@@ -46,7 +46,7 @@ This repository now includes:
 - Android Studio + SDK + JDK 17+
 - Xcode (for iOS builds)
 - Play Console + App Store Connect accounts
-- Production domain with HTTPS (currently expected: `https://hamarr.cl`)
+- Production domain with HTTPS (currently expected: `https://suaacademia.com.br`)
 
 ---
 
@@ -95,8 +95,8 @@ This repository now includes:
 
 1. Deploy latest web to production.
 2. Verify URLs are reachable publicly:
-   - `https://hamarr.cl/manifest.webmanifest`
-   - `https://hamarr.cl/.well-known/assetlinks.json`
+   - `https://suaacademia.com.br/manifest.webmanifest`
+   - `https://suaacademia.com.br/.well-known/assetlinks.json`
 3. Run TWA init/build scripts.
 4. Open generated Android project and sign release.
 5. Publish `.aab` to Play internal testing first.

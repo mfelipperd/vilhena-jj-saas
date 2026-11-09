@@ -10,6 +10,8 @@ import { Button } from '../ui/Button';
 import { IconButton } from '../ui/IconButton';
 import { Modal } from '../ui/Modal';
 import { MultiDisciplineEditor, type DisciplineEntry } from './MultiDisciplineEditor';
+import StudentVilhenaFields from './StudentVilhenaFields';
+import { emptyVilhenaFields, toVilhenaFormData, type VilhenaFieldsValue } from './vilhenaFields';
 
 interface StudentFormModalProps {
   isOpen: boolean;
@@ -28,6 +30,8 @@ export default function StudentFormModal({ isOpen, onClose, onSubmit }: StudentF
 
   const defaultDiscipline = availableDisciplines[0] || 'Brazilian Jiu-Jitsu';
   const defaultBelt = BELT_RANKINGS[defaultDiscipline as Discipline]?.[0] || 'White';
+
+  const [vilhena, setVilhena] = useState<VilhenaFieldsValue>(emptyVilhenaFields);
 
   const [newStudent, setNewStudent] = useState({
     name: '',
@@ -111,6 +115,7 @@ export default function StudentFormModal({ isOpen, onClose, onSubmit }: StudentF
       emergencyContactName: newStudent.emergency_contact_name || undefined,
       emergencyContactPhone: newStudent.emergency_contact_phone || undefined,
       notes: newStudent.notes || undefined,
+      ...toVilhenaFormData(vilhena),
     };
 
     const result = await onSubmit(studentData);
@@ -128,6 +133,7 @@ export default function StudentFormModal({ isOpen, onClose, onSubmit }: StudentF
         emergency_contact_phone: '',
         notes: '',
       });
+      setVilhena(emptyVilhenaFields);
       setDisciplineEntries([{ discipline: availableDisciplines[0] || 'Brazilian Jiu-Jitsu', belt: BELT_RANKINGS[availableDisciplines[0] as Discipline]?.[0] || 'White' }]);
       // Reset date selectors
       setBirthDay('');
@@ -351,6 +357,8 @@ export default function StudentFormModal({ isOpen, onClose, onSubmit }: StudentF
                 </div>
               </div>
             </div>
+
+            <StudentVilhenaFields value={vilhena} onChange={setVilhena} />
 
             {/* Additional Notes */}
             <div>

@@ -14,7 +14,7 @@
  *    inline <style> below uses that flag to softly pulse the same button.
  *
  * Persistence:
- *  - localStorage key 'hamarr.announcement.lightMode.v3' (bumped to surface
+ *  - localStorage key 'vilhena.announcement.lightMode.v3' (bumped to surface
  *    the redesign to users who already dismissed earlier versions).
  */
 
@@ -23,7 +23,7 @@ import { Sun, Moon, X, Sparkles } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useTheme } from '../../context/useTheme';
 
-const STORAGE_KEY = 'hamarr.announcement.lightMode.v3';
+const STORAGE_KEY = 'vilhena.announcement.lightMode.v3';
 const BODY_HIGHLIGHT_CLASS = 'announce-light-mode-active';
 
 interface AnchorPos {

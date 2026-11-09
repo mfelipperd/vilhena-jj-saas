@@ -115,8 +115,8 @@ const MartialArtsParticles = React.lazy(() => import('./landing/MartialArtsParti
               <div className="relative w-64 h-64 xl:w-80 xl:h-80 2xl:w-96 2xl:h-96 flex-shrink-0">
                 <div className="w-full h-full rounded-full bg-slate-800 p-3 electric-border">
                   <img
-                    src="/hammar_logo.jpeg"
-                    alt="Hamarr Jiu-Jitsu MMA Logo"
+                    src="/logo-vilhena.svg"
+                    alt="Equipe Vilhena Jiu-Jitsu"
                     className="w-full h-full rounded-full object-cover"
                   />
                 </div>
@@ -179,7 +179,7 @@ const MartialArtsParticles = React.lazy(() => import('./landing/MartialArtsParti
                   animate={{ x: 0, opacity: 1 }}
                   transition={{ duration: 0.8, delay: 0.5 }}
                 >
-                  HAMARR
+                  VILHENA
                 </motion.div>
                 
                 <motion.div 
@@ -263,7 +263,7 @@ const MartialArtsParticles = React.lazy(() => import('./landing/MartialArtsParti
                   </motion.a>
 
                   <motion.a
-                    href="https://www.instagram.com/hamarr_jiujitsu_mma/"
+                    href="https://www.instagram.com/ctvilhenacwb/"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-3 px-8 py-6 bg-gradient-to-r from-black to-red-800 hover:from-red-800 hover:to-black rounded-xl font-bold text-lg transition-all duration-500 hover:scale-105 shadow-lg hover:shadow-red-500/40 group relative overflow-hidden"
@@ -294,8 +294,8 @@ const MartialArtsParticles = React.lazy(() => import('./landing/MartialArtsParti
                 <div className="relative w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 flex-shrink-0">
                   <div className="w-full h-full rounded-full bg-slate-800 p-2 electric-border">
                     <img
-                      src="/hammar_logo.jpeg"
-                      alt="Hamarr Jiu-Jitsu MMA Logo"
+                      src="/logo-vilhena.svg"
+                      alt="Equipe Vilhena Jiu-Jitsu"
                       className="w-full h-full rounded-full object-cover"
                     />
                   </div>
@@ -344,7 +344,7 @@ const MartialArtsParticles = React.lazy(() => import('./landing/MartialArtsParti
                       animate={{ x: 0, opacity: 1 }}
                       transition={{ duration: 0.8, delay: 0.5 }}
                     >
-                      HAMARR
+                      VILHENA
                     </motion.div>
                     
                     <motion.div 
@@ -431,7 +431,7 @@ const MartialArtsParticles = React.lazy(() => import('./landing/MartialArtsParti
                 </motion.a>
 
                 <motion.a
-                  href="https://www.instagram.com/hamarr_jiujitsu_mma/"
+                  href="https://www.instagram.com/ctvilhenacwb/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 px-4 sm:px-6 py-3 bg-gradient-to-r from-black to-red-800 hover:from-red-800 hover:to-black rounded-xl font-medium transition-all duration-500 hover:scale-105 shadow-lg hover:shadow-red-500/40 text-sm sm:text-base group relative overflow-hidden"
@@ -445,7 +445,7 @@ const MartialArtsParticles = React.lazy(() => import('./landing/MartialArtsParti
                   
                   <span className="relative z-10 flex items-center gap-2">
                     <Instagram className="w-4 h-4 sm:w-5 sm:h-5" />
-                    Follow @hamarr_jiujitsu_mma
+                    Follow @ctvilhenacwb
                     <ExternalLink className="w-3 h-3 sm:w-4 sm:h-4" />
                   </span>
                 </motion.a>
@@ -636,13 +636,13 @@ const MartialArtsParticles = React.lazy(() => import('./landing/MartialArtsParti
                 <ArrowRight className="w-5 h-5" />
               </Button>
               <a
-                href="https://www.instagram.com/hamarr_jiujitsu_mma/"
+                href="https://www.instagram.com/ctvilhenacwb/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 text-slate-300 hover:text-white transition-colors duration-300 text-lg"
               >
                 <Instagram className="w-6 h-6" />
-                Follow @hamarr_jiujitsu_mma
+                Follow @ctvilhenacwb
               </a>
             </div>
           </motion.div>

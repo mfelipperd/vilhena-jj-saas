@@ -76,7 +76,7 @@ export default function Login() {
       >
         <Card className="backdrop-blur-xl bg-black/60 border border-red-500/30 shadow-2xl electric-border">
           <CardHeader className="text-center px-6 py-8">
-            {/* HAMARR Logo */}
+            {/* Equipe Vilhena */}
             <motion.div 
               className="relative w-24 h-24 mx-auto mb-6"
               initial={{ scale: 0.8, opacity: 0 }}
@@ -85,8 +85,8 @@ export default function Login() {
             >
               <div className="w-full h-full rounded-full bg-slate-800 p-2 electric-border">
                 <img 
-                  src="/hammar_logo.jpeg" 
-                  alt="HAMARR Logo" 
+                  src="/logo-vilhena.svg" 
+                  alt="Equipe Vilhena" 
                   className="w-full h-full object-cover rounded-full"
                 />
               </div>
@@ -100,7 +100,7 @@ export default function Login() {
               className="space-y-2"
             >
               <h1 className="text-2xl sm:text-3xl font-black dark-energy-text">
-                HAMARR
+                VILHENA
               </h1>
               <h2 className="text-2xl sm:text-3xl font-black fire-energy-text">
                 MARTIAL ARTS

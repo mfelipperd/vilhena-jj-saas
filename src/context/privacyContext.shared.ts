@@ -5,7 +5,7 @@
 import { createContext } from 'react';
 
 export const MONEY_MASK = '••••••';
-export const PRIVACY_STORAGE_KEY = 'hamarr_money_hidden';
+export const PRIVACY_STORAGE_KEY = 'vilhena_money_hidden';
 
 export interface PrivacyContextValue {
   /** Whether financial values should be hidden in the UI. */

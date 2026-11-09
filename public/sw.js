@@ -1,10 +1,10 @@
 // v6 — handle rejected API fetches gracefully (ERR_FAILED / unhandled promise rejection fix)
-const CACHE_NAME = 'hamarr-pwa-v6';
+const CACHE_NAME = 'vilhena-pwa-v6';
 const APP_SHELL = [
   '/',
   '/index.html',
   '/manifest.webmanifest',
-  '/hammar_logo.jpeg',
+  '/logo-vilhena.svg',
   '/offline.html'
 ];
 
