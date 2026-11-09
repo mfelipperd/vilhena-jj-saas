@@ -1,692 +1,520 @@
-import React, { Suspense } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
-import { useDevicePerformance } from '../hooks/useDevicePerformance';
+import React, { Suspense, useEffect, useRef, useState } from 'react';
 import {
-  Users,
-  Calendar,
-  CreditCard,
-  Award,
-  Instagram,
-  ExternalLink,
-  ArrowRight,
-  Target,
-  Activity,
-  Zap
-} from 'lucide-react';
-import { Button } from './ui/Button';
-import { Card } from './ui/Card';
-import { FloatingElement, GlowingOrb } from './landing';
+  motion,
+  useMotionValueEvent,
+  useReducedMotion,
+  useScroll,
+  useSpring,
+  useTransform,
+  type MotionValue,
+} from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
+import { ArrowRight, Baby, Brain, Check, Instagram, LogIn, Shield, Swords, Trophy, Users } from 'lucide-react';
+import ClickSpark from './reactbits/ClickSpark';
+import CountUp from './reactbits/CountUp';
+import Magnet from './reactbits/Magnet';
+import ScrollReveal from './reactbits/ScrollReveal';
+import ScrollVelocity from './reactbits/ScrollVelocity';
+import ShinyText from './reactbits/ShinyText';
+import SpotlightCard from './reactbits/SpotlightCard';
+import SplitText from './reactbits/SplitText';
 
-const MartialArtsParticles = React.lazy(() => import('./landing/MartialArtsParticles'));const LandingPage: React.FC = () => {
+const LightRays = React.lazy(() => import('./reactbits/LightRays'));
+
+const INSTAGRAM_URL = 'https://www.instagram.com/ctvilhenacwb/';
+const RED = '#E10600';
+
+/* ------------------------------------------------------------------ */
+/*  Parallax helpers                                                   */
+/* ------------------------------------------------------------------ */
+
+/** Moves its children vertically at a different speed than the page scroll. */
+function Parallax({
+  children,
+  distance = 80,
+  className,
+}: {
+  children: React.ReactNode;
+  /** px of travel across the viewport pass; negative moves against the scroll */
+  distance?: number;
+  className?: string;
+}) {
+  const ref = useRef<HTMLDivElement>(null);
+  const reduce = useReducedMotion();
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] });
+  const y = useTransform(scrollYProgress, [0, 1], [distance, -distance]);
+  return (
+    <motion.div ref={ref} style={reduce ? undefined : { y }} className={className}>
+      {children}
+    </motion.div>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  Data (all from docs/PROJETO.md and the academy's public profile)   */
+/* ------------------------------------------------------------------ */
+
+const PROGRAMS = [
+  { icon: Baby, title: 'Kids', text: 'Coordenação, disciplina e respeito desde cedo, brincando e aprendendo no tatame.' },
+  { icon: Swords, title: 'Juvenil', text: 'Fundamentos sólidos, foco e confiança na fase em que o caráter se forma.' },
+  { icon: Users, title: 'Adulto', text: 'Condicionamento, técnica e defesa pessoal para quem quer evoluir de verdade.' },
+  { icon: Trophy, title: 'Master', text: 'Jiu-jítsu inteligente: mínimo de força, máximo de eficiência, em qualquer idade.' },
+];
+
+const BELTS = [
+  { name: 'Branca', color: '#F5F5F5', text: 'O começo de tudo. Fundamentos, humildade e a base técnica de toda a jornada.' },
+  { name: 'Cinza', color: '#9CA3AF', text: 'Para os pequenos: primeiros passos, brincadeira com regras e disciplina.' },
+  { name: 'Amarela', color: '#FACC15', text: 'A criança já entende posições e começa a pensar o jogo.' },
+  { name: 'Laranja', color: '#F97316', text: 'Mais técnica, mais constância, mais confiança dentro e fora do tatame.' },
+  { name: 'Verde', color: '#22C55E', text: 'Maturidade técnica na categoria infanto-juvenil, pronta para o próximo ciclo.' },
+  { name: 'Azul', color: '#2563EB', text: 'Primeira grande conquista adulta: repertório de técnicas e muita resiliência.' },
+  { name: 'Roxa', color: '#9333EA', text: 'Jogo próprio e capacidade de ensinar. A fase em que o estilo aparece.' },
+  { name: 'Marrom', color: '#7C4A2D', text: 'Refino e consistência. Reta final rumo à excelência.' },
+  { name: 'Preta', color: '#18181B', text: 'Não é o fim: é a consequência de anos de treino, técnica e conduta.' },
+];
+
+const BENEFITS = [
+  { icon: Shield, title: 'Disciplina', text: 'Rotina, foco e responsabilidade que aparecem na escola e em casa.' },
+  { icon: Brain, title: 'Hierarquia e respeito', text: 'Aprender a ouvir, esperar a vez e respeitar o colega e o professor.' },
+  { icon: Swords, title: 'Coordenação', text: 'Desenvolvimento motor, equilíbrio e consciência corporal.' },
+  { icon: Check, title: 'Defesa pessoal', text: 'Técnicas reais, ensinadas com segurança e responsabilidade.' },
+];
+
+/* ------------------------------------------------------------------ */
+/*  Sections                                                           */
+/* ------------------------------------------------------------------ */
+
+function Header({ onLogin }: { onLogin: () => void }) {
   const { scrollY } = useScroll();
-  const y2 = useTransform(scrollY, [0, 300], [0, -50]);
-  const { t } = useTranslation();
-  const navigate = useNavigate();
-  const performance = useDevicePerformance();
-
-  const features = [
-    {
-      icon: Users,
-      title: t('landing.features.studentManagement.title'),
-      description: t('landing.features.studentManagement.description'),
-      color: "from-black to-red-900",
-    },
-    {
-      icon: Award,
-      title: t('landing.features.beltProgression.title'),
-      description: t('landing.features.beltProgression.description'),
-      color: "from-red-900 to-black",
-    },
-    {
-      icon: Calendar,
-      title: t('landing.features.classScheduling.title'),
-      description: t('landing.features.classScheduling.description'),
-      color: "from-black to-red-800",
-    },
-    {
-      icon: CreditCard,
-      title: t('landing.features.paymentBilling.title'),
-      description: t('landing.features.paymentBilling.description'),
-      color: "from-red-800 to-black",
-    },
-    {
-      icon: Activity,
-      title: t('landing.features.attendanceMonitoring.title'),
-      description: t('landing.features.attendanceMonitoring.description'),
-      color: "from-black to-red-700",
-    },
-    {
-      icon: Target,
-      title: t('landing.features.growthAnalytics.title'),
-      description: t('landing.features.growthAnalytics.description'),
-      color: "from-red-700 to-black",
-    },
-  ];
-
-  const stats = [
-    { icon: Users, value: "500+", label: t('landing.stats.studentsManaged') },
-    { icon: Award, value: "50+", label: t('landing.stats.beltPromotionsTracked') },
-    { icon: Calendar, value: "1000+", label: t('landing.stats.classesScheduled') },
-    { icon: Target, value: "95%", label: t('landing.stats.studentRetention') },
-  ];
+  const [solid, setSolid] = useState(false);
+  useMotionValueEvent(scrollY, 'change', (v) => setSolid(v > 40));
 
   return (
-    <div className="dark-page min-h-screen bg-gradient-to-br from-black via-red-900/20 to-black text-white overflow-hidden relative">
-      {/* Animated Background */}
-      <Suspense fallback={null}>
-        <MartialArtsParticles />
-      </Suspense>
-      
-      {/* Background Orbs - Performance optimized */}
-      {!performance.isLowEnd && (
-        <>
-          <GlowingOrb 
-            className="top-10 sm:top-20 left-5 sm:left-10 w-48 h-48 sm:w-72 sm:h-72" 
-            color="#000000" 
-          />
-          <GlowingOrb 
-            className="top-32 sm:top-40 right-5 sm:right-20 w-60 h-60 sm:w-96 sm:h-96" 
-            color="#DC2626" 
-          />
-          {!performance.isMobile && (
-            <>
-              <GlowingOrb 
-                className="bottom-10 sm:bottom-20 left-1/4 w-52 h-52 sm:w-80 sm:h-80" 
-                color="#000000" 
-              />
-              <GlowingOrb 
-                className="top-1/2 right-1/4 w-40 h-40 sm:w-64 sm:h-64" 
-                color="#B91C1C" 
-              />
-            </>
-          )}
-        </>
+    <header
+      className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
+        solid ? 'bg-[#140808]/80 backdrop-blur-lg border-b border-white/10' : 'bg-transparent'
+      }`}
+    >
+      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
+        <a href="#topo" className="flex items-center gap-3">
+          <img src="/logo-vilhena.svg" alt="Equipe Vilhena" className="h-9 w-9 rounded-lg" />
+          <span className="font-display text-lg font-bold tracking-wide">VILHENA</span>
+        </a>
+        <nav className="hidden items-center gap-8 text-sm text-white/80 md:flex">
+          <a className="hover:text-white" href="#programas">Programas</a>
+          <a className="hover:text-white" href="#graduacao">Graduação</a>
+          <a className="hover:text-white" href="#pais">Para os pais</a>
+          <a className="hover:text-white" href="#aula-experimental">Aula experimental</a>
+        </nav>
+        <Magnet magnetStrength={4} padding={40}>
+          <button
+            onClick={onLogin}
+            className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-2 text-sm font-medium text-white backdrop-blur hover:bg-white/10"
+          >
+            <LogIn className="h-4 w-4" /> Área do aluno
+          </button>
+        </Magnet>
+      </div>
+    </header>
+  );
+}
+
+function Hero({ onLogin }: { onLogin: () => void }) {
+  const ref = useRef<HTMLElement>(null);
+  const reduce = useReducedMotion();
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] });
+  const smooth = useSpring(scrollYProgress, { stiffness: 80, damping: 25 });
+
+  const watermarkY = useTransform(smooth, [0, 1], [0, 260]);
+  const watermarkScale = useTransform(smooth, [0, 1], [1, 1.35]);
+  const contentY = useTransform(smooth, [0, 1], [0, -120]);
+  const contentOpacity = useTransform(smooth, [0, 0.7], [1, 0]);
+  const glowY = useTransform(smooth, [0, 1], [0, 140]);
+
+  return (
+    <section ref={ref} id="topo" className="relative flex min-h-screen items-center justify-center overflow-hidden">
+      {/* Layer 1 — light rays (WebGL) */}
+      {!reduce && (
+        <div className="absolute inset-0">
+          <Suspense fallback={null}>
+            <LightRays
+              raysOrigin="top-center"
+              raysColor={RED}
+              raysSpeed={0.9}
+              lightSpread={0.9}
+              rayLength={1.4}
+              followMouse
+              mouseInfluence={0.12}
+              pulsating={false}
+              cursorShadow={false}
+            />
+          </Suspense>
+        </div>
       )}
 
-      {/* Hero Section */}
-      <section className="relative z-10 min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 pt-16 sm:pt-0">
-        <div className="max-w-8xl mx-auto">
-          {/* Desktop Layout (lg and above) */}
-          <div className="hidden lg:grid lg:grid-cols-2 lg:gap-16 xl:gap-24 items-center min-h-[80vh]">
-            {/* Left Side - Logo */}
-            <div className="flex justify-center lg:justify-end">
-              <div className="relative w-64 h-64 xl:w-80 xl:h-80 2xl:w-96 2xl:h-96 flex-shrink-0">
-                <div className="w-full h-full rounded-full bg-slate-800 p-3 electric-border">
-                  <img
-                    src="/logo-vilhena.svg"
-                    alt="Equipe Vilhena Jiu-Jitsu"
-                    className="w-full h-full rounded-full object-cover"
-                  />
-                </div>
-                
-                {/* Electric sparks positioned absolutely - Performance optimized */}
-                {!performance.isLowEnd && (
-                  <>
-                    <div className="electric-spark absolute top-0 left-1/2 transform -translate-x-1/2"></div>
-                    <div className="electric-spark absolute top-1/4 right-0"></div>
-                    <div className="electric-spark absolute bottom-0 left-1/2 transform -translate-x-1/2"></div>
-                    {!performance.isMobile && (
-                      <>
-                        <div className="electric-spark absolute top-1/4 left-0"></div>
-                        <div className="electric-spark absolute top-1/3 right-1/4"></div>
-                        <div className="electric-spark absolute bottom-1/3 left-1/4"></div>
-                      </>
-                    )}
-                    
-                    {/* Electric glow */}
-                    <div className="electric-glow"></div>
-                    
-                    {/* Additional electric rings - Only on capable devices */}
-                    {!performance.isMobile && (
-                      <>
-                        <motion.div
-                          className="absolute -inset-3 rounded-full border border-cyan-400/40"
-                          animate={{ 
-                            opacity: [0.3, 0.8, 0.3],
-                            scale: [0.98, 1.02, 0.98]
-                          }}
-                          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                        />
-                        <motion.div
-                          className="absolute -inset-6 rounded-full border border-blue-400/20"
-                          animate={{ 
-                            opacity: [0.2, 0.6, 0.2],
-                            scale: [0.96, 1.04, 0.96]
-                          }}
-                          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-                        />
-                      </>
-                    )}
-                  </>
-                )}
-              </div>
-            </div>
-            
-            {/* Right Side - Brand Text and Content */}
-            <div className="text-left space-y-8">
-              {/* Brand Text - Cinturón Negro con Cinta Roja */}
-              <motion.h1 
-                className="text-4xl xl:text-5xl 2xl:text-6xl font-black tracking-tight leading-tight space-y-3"
-                initial={{ opacity: 0, x: 50 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 1, delay: 0.3 }}
-              >
-                <motion.div 
-                  className="block dark-energy-text drop-shadow-2xl"
-                  initial={{ x: 50, opacity: 0 }}
-                  animate={{ x: 0, opacity: 1 }}
-                  transition={{ duration: 0.8, delay: 0.5 }}
-                >
-                  VILHENA
-                </motion.div>
-                
-                <motion.div 
-                  className="block fire-energy-text text-3xl xl:text-4xl 2xl:text-5xl"
-                  initial={{ scale: 0.8, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  transition={{ duration: 0.8, delay: 0.7 }}
-                >
-                  JIU-JITSU GI / NO GI
-                </motion.div>
-                
-                <motion.div 
-                  className="block dark-energy-text drop-shadow-2xl"
-                  initial={{ x: 50, opacity: 0 }}
-                  animate={{ x: 0, opacity: 1 }}
-                  transition={{ duration: 0.8, delay: 0.9 }}
-                >
-                  MMA
-                </motion.div>
-              </motion.h1>
+      {/* Layer 2 — slow glow */}
+      <motion.div
+        style={reduce ? undefined : { y: glowY }}
+        className="pointer-events-none absolute left-1/2 top-1/3 h-[60vh] w-[60vh] -translate-x-1/2 rounded-full bg-[#E10600]/25 blur-[120px]"
+      />
 
-              {/* Hero Content */}
-              <div className="space-y-6">
-                <motion.div
-                  className="w-32 h-1 bg-gradient-to-r from-red-600 to-black rounded-full shadow-lg shadow-red-500/50"
-                  initial={{ width: 0, opacity: 0 }}
-                  animate={{ width: "auto", opacity: 1 }}
-                  transition={{ duration: 1.2, delay: 0.9 }}
-                />
-                
-                <motion.div 
-                  className="space-y-6 max-w-2xl"
-                  initial={{ y: 30, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{ duration: 0.8, delay: 0.6 }}
-                >
-                  <motion.p 
-                    className="text-lg xl:text-xl 2xl:text-2xl leading-relaxed font-bold text-white mt-4"
-                    initial={{ y: 20, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    transition={{ duration: 0.6, delay: 1.2 }}
-                  >
-                    {t('landing.hero.description')}
-                  </motion.p>
-                </motion.div>
+      {/* Layer 3 — giant watermark that drifts and scales on scroll */}
+      <motion.img
+        src="/logo-vilhena-mark.svg"
+        alt=""
+        aria-hidden
+        style={reduce ? undefined : { y: watermarkY, scale: watermarkScale }}
+        className="pointer-events-none absolute left-1/2 top-1/2 w-[min(90vw,780px)] -translate-x-1/2 -translate-y-1/2 opacity-[0.07] mix-blend-screen"
+      />
 
-                <motion.div
-                  className="flex gap-6 pt-6"
-                  initial={{ y: 30, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{ duration: 0.8, delay: 1.5 }}
-                >
-                  <motion.a 
-                    href="/login"
-                    whileHover={{ scale: 1.08, y: -4 }}
-                    whileTap={{ scale: 0.92 }}
-                    initial={{ x: -50, opacity: 0 }}
-                    animate={{ x: 0, opacity: 1 }}
-                    transition={{ duration: 0.6, delay: 1.7 }}
-                    className="group"
-                  >
-                    <div className="relative">
-                      <Button
-                        size="lg"
-                        className="mega-cta-button text-white font-black px-12 py-6 text-xl relative overflow-hidden transition-all duration-700"
-                      >
-                        <div className="absolute inset-0 bg-gradient-to-r from-red-600 via-orange-500 to-red-600 opacity-90" />
-                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-yellow-400/30 to-transparent" />
-                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000" />
-                        <div className="absolute -inset-1 bg-gradient-to-r from-red-600 to-orange-500 rounded-xl blur-sm opacity-60 group-hover:opacity-100 transition-opacity duration-500" />
-                        <div className="absolute -inset-2 bg-gradient-to-r from-red-500 to-orange-400 rounded-xl blur-md opacity-30 group-hover:opacity-60 transition-opacity duration-500" />
-                        
-                        <span className="relative z-10 flex items-center gap-3">
-                          <Zap className="w-5 h-5 text-yellow-300" />
-                          {t('landing.hero.getStarted')}
-                          <ArrowRight className="w-6 h-6 group-hover:translate-x-2 transition-transform duration-300" />
-                          <Zap className="w-5 h-5 text-yellow-300" />
-                        </span>
-                      </Button>
-                    </div>
-                  </motion.a>
-
-                  <motion.a
-                    href="https://www.instagram.com/ctvilhenacwb/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-3 px-8 py-6 bg-gradient-to-r from-black to-red-800 hover:from-red-800 hover:to-black rounded-xl font-bold text-lg transition-all duration-500 hover:scale-105 shadow-lg hover:shadow-red-500/40 group relative overflow-hidden"
-                    whileHover={{ scale: 1.05, y: -2 }}
-                    whileTap={{ scale: 0.95 }}
-                    initial={{ x: 50, opacity: 0 }}
-                    animate={{ x: 0, opacity: 1 }}
-                    transition={{ duration: 0.6, delay: 1.9 }}
-                  >
-                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
-                    
-                    <span className="relative z-10 flex items-center gap-3">
-                      <Instagram className="w-6 h-6" />
-                      {t('landing.hero.followUs')}
-                      <ExternalLink className="w-5 h-5" />
-                    </span>
-                  </motion.a>
-                </motion.div>
-              </div>
-            </div>
-          </div>
-
-          {/* Mobile/Tablet Layout (below lg) */}
-          <div className="lg:hidden text-center">
-            <div className="mb-8 sm:mb-12">
-              <div className="flex flex-col items-center justify-center gap-6">
-                {/* Logo */}
-                <div className="relative w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 flex-shrink-0">
-                  <div className="w-full h-full rounded-full bg-slate-800 p-2 electric-border">
-                    <img
-                      src="/logo-vilhena.svg"
-                      alt="Equipe Vilhena Jiu-Jitsu"
-                      className="w-full h-full rounded-full object-cover"
-                    />
-                  </div>
-                  
-                  {/* Electric sparks positioned absolutely */}
-                  <div className="electric-spark absolute top-0 left-1/2 transform -translate-x-1/2"></div>
-                  <div className="electric-spark absolute top-1/4 right-0"></div>
-                  <div className="electric-spark absolute bottom-0 left-1/2 transform -translate-x-1/2"></div>
-                  <div className="electric-spark absolute top-1/4 left-0"></div>
-                  <div className="electric-spark absolute top-1/3 right-1/4"></div>
-                  <div className="electric-spark absolute bottom-1/3 left-1/4"></div>
-                  
-                  {/* Electric glow */}
-                  <div className="electric-glow"></div>
-                  
-                  {/* Additional electric rings */}
-                  <motion.div
-                    className="absolute -inset-2 sm:-inset-3 rounded-full border border-cyan-400/40"
-                    animate={{ 
-                      opacity: [0.3, 0.8, 0.3],
-                      scale: [0.98, 1.02, 0.98]
-                    }}
-                    transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                  />
-                  <motion.div
-                    className="absolute -inset-4 sm:-inset-6 rounded-full border border-blue-400/20"
-                    animate={{ 
-                      opacity: [0.2, 0.6, 0.2],
-                      scale: [0.96, 1.04, 0.96]
-                    }}
-                    transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-                  />
-                </div>
-                
-                {/* Brand Text - Cinturón Negro con Cinta Roja */}
-                <div className="text-center max-w-4xl">
-                  <motion.h1 
-                    className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight leading-tight space-y-3"
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 1, delay: 0.3 }}
-                  >
-                    <motion.div 
-                      className="block dark-energy-text drop-shadow-2xl"
-                      initial={{ x: -100, opacity: 0 }}
-                      animate={{ x: 0, opacity: 1 }}
-                      transition={{ duration: 0.8, delay: 0.5 }}
-                    >
-                      VILHENA
-                    </motion.div>
-                    
-                    <motion.div 
-                      className="block fire-energy-text text-2xl sm:text-3xl md:text-4xl"
-                      initial={{ scale: 0.8, opacity: 0 }}
-                      animate={{ scale: 1, opacity: 1 }}
-                      transition={{ duration: 0.8, delay: 0.7 }}
-                    >
-                      JIU-JITSU GI / NO GI
-                    </motion.div>
-                    
-                    <motion.div 
-                      className="block dark-energy-text drop-shadow-2xl"
-                      initial={{ x: 100, opacity: 0 }}
-                      animate={{ x: 0, opacity: 1 }}
-                      transition={{ duration: 0.8, delay: 0.9 }}
-                    >
-                      MMA
-                    </motion.div>
-                  </motion.h1>
-                </div>
-              </div>
-            </div>
-
-            {/* Mobile Hero Content */}
-            <div className="space-y-6 sm:space-y-8">
-              <motion.div
-                className="w-24 sm:w-32 md:w-40 h-1 bg-gradient-to-r from-amber-400 to-orange-500 mx-auto rounded-full shadow-lg shadow-amber-500/50"
-                initial={{ width: 0, opacity: 0 }}
-                animate={{ width: "auto", opacity: 1 }}
-                transition={{ duration: 1.2, delay: 0.9 }}
-              />
-              
-              <motion.div 
-                className="space-y-8 max-w-3xl mx-auto px-4"
-                initial={{ y: 30, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ duration: 0.8, delay: 0.6 }}
-              >
-                <motion.p 
-                  className="text-base sm:text-lg md:text-xl leading-relaxed font-bold text-white mt-6"
-                  initial={{ y: 20, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{ duration: 0.6, delay: 1.2 }}
-                >
-                  {t('landing.hero.description')}
-                </motion.p>
-              </motion.div>
-
-              <motion.div
-                className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-center pt-6 sm:pt-8"
-                initial={{ y: 30, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ duration: 0.8, delay: 1.5 }}
-              >
-                <motion.a 
-                  href="/login"
-                  whileHover={{ scale: 1.08, y: -4 }}
-                  whileTap={{ scale: 0.92 }}
-                  initial={{ x: -50, opacity: 0 }}
-                  animate={{ x: 0, opacity: 1 }}
-                  transition={{ duration: 0.6, delay: 1.7 }}
-                  className="group"
-                >
-                  <div className="relative">
-                    <Button
-                      size="lg"
-                      className="mega-cta-button text-white font-black px-8 sm:px-12 py-4 sm:py-6 text-lg sm:text-xl relative overflow-hidden transition-all duration-700"
-                    >
-                      <div className="absolute inset-0 bg-gradient-to-r from-red-600 via-orange-500 to-red-600 opacity-90" />
-                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-yellow-400/30 to-transparent" />
-                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000" />
-                      <div className="absolute -inset-1 bg-gradient-to-r from-red-600 to-orange-500 rounded-xl blur-sm opacity-60 group-hover:opacity-100 transition-opacity duration-500" />
-                      <div className="absolute -inset-2 bg-gradient-to-r from-red-500 to-orange-400 rounded-xl blur-md opacity-30 group-hover:opacity-60 transition-opacity duration-500" />
-                      
-                      <span className="relative z-10 flex items-center gap-3">
-                        <Zap className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-300" />
-                        GET STARTED
-                        <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6 group-hover:translate-x-2 transition-transform duration-300" />
-                        <Zap className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-300" />
-                      </span>
-                    </Button>
-                  </div>
-                </motion.a>
-
-                <motion.a
-                  href="https://www.instagram.com/ctvilhenacwb/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-4 sm:px-6 py-3 bg-gradient-to-r from-black to-red-800 hover:from-red-800 hover:to-black rounded-xl font-medium transition-all duration-500 hover:scale-105 shadow-lg hover:shadow-red-500/40 text-sm sm:text-base group relative overflow-hidden"
-                  whileHover={{ scale: 1.05, y: -2 }}
-                  whileTap={{ scale: 0.95 }}
-                  initial={{ x: 50, opacity: 0 }}
-                  animate={{ x: 0, opacity: 1 }}
-                  transition={{ duration: 0.6, delay: 1.9 }}
-                >
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
-                  
-                  <span className="relative z-10 flex items-center gap-2">
-                    <Instagram className="w-4 h-4 sm:w-5 sm:h-5" />
-                    Follow @ctvilhenacwb
-                    <ExternalLink className="w-3 h-3 sm:w-4 sm:h-4" />
-                  </span>
-                </motion.a>
-              </motion.div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Stats Section */}
-      <motion.section 
-        className="relative z-10 py-16 sm:py-20 px-4 sm:px-6 lg:px-8"
-        style={{ y: y2 }}
+      {/* Layer 4 — content */}
+      <motion.div
+        style={reduce ? undefined : { y: contentY, opacity: contentOpacity }}
+        className="relative z-10 mx-auto max-w-5xl px-4 text-center sm:px-6"
       >
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
-            {stats.map((stat, index) => (
-              <motion.div
-                key={index}
-                initial={{ scale: 0, opacity: 0, rotateY: -90 }}
-                whileInView={{ scale: 1, opacity: 1, rotateY: 0 }}
-                transition={{ 
-                  duration: 0.7, 
-                  delay: index * 0.15,
-                  type: "spring",
-                  stiffness: 100 
-                }}
-                viewport={{ once: true }}
-                whileHover={{ 
-                  scale: 1.05, 
-                  y: -8,
-                  rotateY: 5,
-                  boxShadow: "0 20px 40px rgba(0,0,0,0.3)"
-                }}
-                className="text-center group"
-              >
-                <FloatingElement delay={index * 0.5}>
-                  <Card className="bg-white/5 backdrop-blur-xl border-white/10 hover:bg-white/15 hover:border-amber-400/30 transition-all duration-500 p-4 sm:p-6 relative overflow-hidden group-hover:shadow-2xl group-hover:shadow-amber-500/20">
-                    {/* Background glow */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-amber-500/5 to-orange-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                    
-                    {/* Icon with enhanced styling */}
-                    <div className="relative z-10 mb-3 sm:mb-4">
-                      <div className="w-10 h-10 sm:w-12 sm:h-12 mx-auto mb-3 rounded-2xl bg-gradient-to-br from-amber-400 to-orange-500 p-2 sm:p-2.5 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg flex items-center justify-center">
-                        <stat.icon className="w-5 h-5 sm:w-6 sm:h-6 text-white drop-shadow-lg" strokeWidth={1.5} />
-                      </div>
-                    </div>
-                    
-                    <div className="relative z-10">
-                      <motion.div 
-                        className="text-2xl sm:text-3xl lg:text-4xl font-black gradient-text-white-amber mb-1 sm:mb-2"
-                        initial={{ scale: 0.5 }}
-                        whileInView={{ scale: 1 }}
-                        transition={{ duration: 0.5, delay: index * 0.1 + 0.3 }}
-                      >
-                        {stat.value}
-                      </motion.div>
-                      <div className="text-xs sm:text-sm font-medium text-slate-300 group-hover:text-slate-200 transition-colors duration-300">
-                        {stat.label}
-                      </div>
-                    </div>
-                    
-                    {/* Accent line */}
-                    <div className="absolute bottom-0 left-0 h-0.5 bg-gradient-to-r from-amber-400 to-orange-500 w-0 group-hover:w-full transition-all duration-500 ease-out" />
-                  </Card>
-                </FloatingElement>
-              </motion.div>
-            ))}
-          </div>
+        <div className="mb-6 flex justify-center">
+          <ShinyText
+            text="EQUIPE VILHENA · JIU-JÍTSU · CURITIBA"
+            color="#d9a3a0"
+            shineColor="#ffffff"
+            speed={3}
+            className="text-xs font-semibold uppercase tracking-[0.35em] sm:text-sm"
+          />
         </div>
-      </motion.section>
 
-      {/* Features Section */}
-      <section className="relative z-10 py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <motion.div
-            initial={{ y: 50, opacity: 0 }}
-            whileInView={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-3xl sm:text-5xl font-black mb-6 gradient-text-yellow-red">
-              {t('landing.featuresSection.title')}
-            </h2>
-            <p className="text-lg text-slate-400 max-w-2xl mx-auto">
-              {t('landing.featuresSection.description')}
-            </p>
-          </motion.div>
+        <SplitText
+          text="FORÇA E HONRA, OSS"
+          tag="h1"
+          effect="rise"
+          splitType="chars"
+          delay={45}
+          duration={1.1}
+          trigger="load"
+          className="font-display text-5xl font-extrabold leading-[1.05] text-white sm:text-7xl lg:text-8xl"
+        />
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-10">
-            {features.map((feature, index) => (
-              <motion.div
-                key={index}
-                initial={{ y: 50, opacity: 0 }}
-                whileInView={{ y: 0, opacity: 1 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                whileHover={{ 
-                  y: -8, 
-                  scale: 1.03,
-                  rotateY: 5,
-                  boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.5)"
-                }}
-                className="group perspective-1000"
-              >
-                <Card className="bg-white/5 backdrop-blur-xl border-white/10 hover:bg-white/15 hover:border-white/20 transition-all duration-500 p-6 sm:p-8 h-full relative overflow-hidden group-hover:shadow-2xl group-hover:shadow-amber-500/10">
-                  {/* Glow effect on hover */}
-                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                    <div className={`absolute inset-0 bg-gradient-to-r ${feature.color} opacity-5 blur-xl`} />
-                  </div>
-                  
-                  {/* Icon with martial arts styling */}
-                  <div className="relative z-10 mb-6">
-                    <div className={`w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-gradient-to-r ${feature.color} p-4 sm:p-5 mb-4 group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 shadow-lg relative flex items-center justify-center`}>
-                      {/* Inner glow */}
-                      <div className={`absolute inset-0 rounded-2xl bg-gradient-to-r ${feature.color} opacity-50 blur-sm group-hover:opacity-75 transition-opacity duration-300`} />
-                      <feature.icon className="w-8 h-8 sm:w-10 sm:h-10 text-white relative z-10 drop-shadow-lg" strokeWidth={1.5} />
-                    </div>
-                    
-                    {/* Floating particles around icon */}
-                    <div className="absolute -inset-2 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
-                      {[...Array(3)].map((_, i) => (
-                        <motion.div
-                          key={i}
-                          className={`absolute w-1 h-1 rounded-full bg-gradient-to-r ${feature.color}`}
-                          style={{
-                            left: `${20 + i * 30}%`,
-                            top: `${10 + i * 20}%`,
-                          }}
-                          animate={{
-                            y: [-5, -15, -5],
-                            opacity: [0.3, 0.8, 0.3],
-                            scale: [0.5, 1, 0.5],
-                          }}
-                          transition={{
-                            duration: 2,
-                            repeat: Infinity,
-                            delay: i * 0.3,
-                            ease: "easeInOut",
-                          }}
-                        />
-                      ))}
-                    </div>
-                  </div>
-                  
-                  <div className="relative z-10">
-                    <h3 className="text-xl sm:text-2xl font-bold mb-4 text-white group-hover:gradient-text-white-amber transition-all duration-300">
-                      {feature.title}
-                    </h3>
-                    <p className="text-slate-400 group-hover:text-slate-300 leading-relaxed text-sm sm:text-base transition-colors duration-300">
-                      {feature.description}
-                    </p>
-                  </div>
-                  
-                  {/* Bottom accent line */}
-                  <div className={`absolute bottom-0 left-0 h-1 bg-gradient-to-r ${feature.color} w-0 group-hover:w-full transition-all duration-500 ease-out`} />
-                </Card>
-              </motion.div>
-            ))}
-          </div>
+        <p className="mx-auto mt-6 max-w-2xl text-lg text-white/75 sm:text-xl">
+          Mínimo de força, máximo de eficiência. Treine jiu-jítsu com técnica, disciplina e uma família que
+          caminha junto no tatame.
+        </p>
+
+        <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
+          <Magnet magnetStrength={3} padding={60}>
+            <a
+              href="#aula-experimental"
+              className="inline-flex items-center gap-2 rounded-full bg-[#E10600] px-8 py-4 font-semibold text-white shadow-[0_0_40px_-5px_#E10600] transition hover:bg-[#B80500]"
+            >
+              Quero uma aula experimental <ArrowRight className="h-5 w-5" />
+            </a>
+          </Magnet>
+          <Magnet magnetStrength={3} padding={60}>
+            <button
+              onClick={onLogin}
+              className="inline-flex items-center gap-2 rounded-full border border-white/25 px-8 py-4 font-semibold text-white hover:bg-white/10"
+            >
+              Já sou aluno
+            </button>
+          </Magnet>
         </div>
-      </section>
+      </motion.div>
 
-      {/* CTA Section */}
-      <section className="relative z-10 py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto text-center">
-          <motion.div
-            initial={{ y: 50, opacity: 0 }}
-            whileInView={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="space-y-8"
-          >
-            <h2 className="text-3xl sm:text-5xl font-black gradient-text-green-teal">
-              {t('landing.cta.title')}
-            </h2>
-            <p className="text-xl text-slate-300 max-w-2xl mx-auto leading-relaxed">
-              {t('landing.cta.description')}
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <Button 
-                size="lg" 
-                onClick={() => navigate('/register')}
-                className="bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white px-8 py-4 text-lg font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 flex items-center gap-2"
-              >
-                {t('landing.cta.startTrial')}
-                <ArrowRight className="w-5 h-5" />
-              </Button>
-              <a
-                href="https://www.instagram.com/ctvilhenacwb/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 text-slate-300 hover:text-white transition-colors duration-300 text-lg"
-              >
-                <Instagram className="w-6 h-6" />
-                Follow @ctvilhenacwb
-              </a>
+      {/* Scroll hint */}
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-white/50">
+        <motion.div
+          animate={reduce ? undefined : { y: [0, 10, 0] }}
+          transition={{ repeat: Infinity, duration: 1.8 }}
+          className="h-10 w-6 rounded-full border border-white/30 p-1"
+        >
+          <div className="mx-auto h-2 w-1 rounded-full bg-white/70" />
+        </motion.div>
+      </div>
+    </section>
+  );
+}
+
+function Ticker() {
+  return (
+    <section aria-hidden className="relative border-y border-white/10 bg-[#E10600] py-5 text-[#140808]">
+      <ScrollVelocity
+        texts={['JIU-JÍTSU • DISCIPLINA • HONRA • RESPEITO •', 'EQUIPE VILHENA • FORÇA E HONRA, OSS •']}
+        velocity={60}
+        numCopies={6}
+        fontSize="clamp(1.5rem, 4vw, 3rem)"
+        fontWeight={800}
+        color="#140808"
+        className="font-display"
+        pauseOnHover={false}
+        skewWithVelocity={4}
+      />
+    </section>
+  );
+}
+
+function Manifesto() {
+  return (
+    <section className="relative mx-auto max-w-5xl px-4 py-32 sm:px-6">
+      <p className="mb-6 text-sm font-semibold uppercase tracking-[0.3em] text-[#E10600]">Nossa filosofia</p>
+      <ScrollReveal
+        baseOpacity={0.12}
+        enableBlur
+        baseRotation={2}
+        blurStrength={6}
+        containerClassName="!my-0"
+        textClassName="font-display !text-3xl sm:!text-5xl !leading-tight text-white"
+      >
+        A graduação se constrói com tempo de treino, técnica e conduta. Aqui o respeito vem antes da faixa, e a
+        evolução de cada aluno é celebrada como conquista da equipe inteira.
+      </ScrollReveal>
+    </section>
+  );
+}
+
+function Stats() {
+  const items = [
+    { to: 15, suffix: '', label: 'unidades na rede Vilhena' },
+    { to: 9, suffix: '', label: 'faixas, da branca à preta' },
+    { to: 5, suffix: '', label: 'dias de treino por semana' },
+    { to: 4, suffix: '', label: 'categorias: kids a master' },
+  ];
+  return (
+    <section className="relative overflow-hidden py-24">
+      <Parallax distance={60} className="pointer-events-none absolute inset-0">
+        <div className="absolute -left-20 top-0 h-80 w-80 rounded-full bg-[#E10600]/20 blur-[100px]" />
+        <div className="absolute -right-10 bottom-0 h-80 w-80 rounded-full bg-[#8B0000]/30 blur-[100px]" />
+      </Parallax>
+      <div className="relative mx-auto grid max-w-6xl grid-cols-2 gap-10 px-4 sm:px-6 lg:grid-cols-4">
+        {items.map((s) => (
+          <div key={s.label} className="text-center">
+            <div className="font-display text-6xl font-extrabold text-white sm:text-7xl">
+              <CountUp to={s.to} duration={2} />
+              {s.suffix}
             </div>
-          </motion.div>
-        </div>
-      </section>
+            <div className="mt-2 text-sm uppercase tracking-widest text-white/60">{s.label}</div>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
 
-      {/* Footer */}
-      <footer className="relative z-10 py-12 px-4 sm:px-6 lg:px-8 border-t border-white/10">
-        <div className="max-w-7xl mx-auto text-center space-y-6">
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="space-y-4"
-          >
-            <p className="text-lg font-medium text-amber-400">
-              Dedicated to <span className="font-bold">Tyrone Salgado Reyes</span>
+function Programs() {
+  return (
+    <section id="programas" className="relative mx-auto max-w-6xl px-4 py-28 sm:px-6">
+      <div className="mb-14 max-w-2xl">
+        <p className="mb-3 text-sm font-semibold uppercase tracking-[0.3em] text-[#E10600]">Programas</p>
+        <h2 className="font-display text-4xl font-bold sm:text-5xl">Um tatame para cada fase da vida</h2>
+      </div>
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        {PROGRAMS.map((p, i) => (
+          <Parallax key={p.title} distance={i % 2 === 0 ? 30 : -30}>
+            <SpotlightCard
+              spotlightColor="rgba(225, 6, 0, 0.35)"
+              className="h-full rounded-2xl border border-white/10 bg-white/[0.03] p-7"
+            >
+              <div className="mb-5 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-[#E10600]/15 text-[#ff5a52]">
+                <p.icon className="h-6 w-6" />
+              </div>
+              <h3 className="font-display text-2xl font-bold">{p.title}</h3>
+              <p className="mt-3 text-white/65">{p.text}</p>
+            </SpotlightCard>
+          </Parallax>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+/** Sticky section: the belt changes as the visitor scrolls through it. */
+function BeltJourney() {
+  const ref = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end end'] });
+  const [index, setIndex] = useState(0);
+  useMotionValueEvent(scrollYProgress, 'change', (v) => {
+    setIndex(Math.min(BELTS.length - 1, Math.max(0, Math.floor(v * BELTS.length))));
+  });
+  const belt = BELTS[index];
+  const fill: MotionValue<number> = useSpring(scrollYProgress, { stiffness: 90, damping: 24 });
+  const barWidth = useTransform(fill, [0, 1], ['0%', '100%']);
+
+  return (
+    <section ref={ref} id="graduacao" className="relative" style={{ height: `${BELTS.length * 45}vh` }}>
+      <div className="sticky top-0 flex h-screen items-center overflow-hidden">
+        <div
+          className="pointer-events-none absolute inset-0 transition-colors duration-700"
+          style={{ background: `radial-gradient(60% 50% at 70% 50%, ${belt.color}33, transparent 70%)` }}
+        />
+        <div className="relative mx-auto grid w-full max-w-6xl items-center gap-12 px-4 sm:px-6 lg:grid-cols-2">
+          <div>
+            <p className="mb-3 text-sm font-semibold uppercase tracking-[0.3em] text-[#E10600]">Graduação</p>
+            <h2 className="font-display text-4xl font-bold sm:text-5xl">Cada faixa é uma história</h2>
+            <p className="mt-4 max-w-md text-white/65">
+              Role para acompanhar a jornada. Frequência, técnica e conduta definem quando chega a hora do próximo
+              grau.
             </p>
-            <p className="text-slate-400">
-              Created by <span className="text-white font-medium">Luis Salgado Reyes</span>
-            </p>
-            <div className="flex items-center justify-center gap-2 text-slate-400">
-              <span>Powered by</span>
-              <a
-                href="https://not-meta.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-cyan-400 hover:text-cyan-300 font-medium transition-colors duration-300 inline-flex items-center gap-1"
-              >
-                not-meta.com
-                <ExternalLink className="w-3 h-3" />
-              </a>
+            <div className="mt-10 h-1.5 w-full max-w-md overflow-hidden rounded-full bg-white/10">
+              <motion.div className="h-full rounded-full bg-[#E10600]" style={{ width: barWidth }} />
             </div>
-          </motion.div>
+            <div className="mt-3 flex max-w-md justify-between text-xs text-white/40">
+              <span>Branca</span>
+              <span>Preta</span>
+            </div>
+          </div>
 
-          <div className="pt-6 border-t border-white/10">
-            <p className="text-sm text-slate-500">
-              © 2025 Martial Arts Manager. All rights reserved.
-            </p>
+          <div className="flex flex-col items-center text-center lg:items-start lg:text-left">
+            <motion.div
+              key={belt.name}
+              initial={{ opacity: 0, y: 30, rotate: -2 }}
+              animate={{ opacity: 1, y: 0, rotate: 0 }}
+              transition={{ duration: 0.5 }}
+              className="w-full"
+            >
+              {/* The belt itself */}
+              <div className="relative mx-auto h-16 w-full max-w-md overflow-hidden rounded-md shadow-2xl lg:mx-0" style={{ background: belt.color }}>
+                <div className="absolute right-6 top-0 flex h-full w-20 items-center justify-center gap-1.5 bg-black">
+                  {[0, 1, 2, 3].map((n) => (
+                    <span key={n} className="h-10 w-1.5 rounded-sm bg-white/90" />
+                  ))}
+                </div>
+              </div>
+              <h3 className="mt-8 font-display text-5xl font-extrabold" style={{ color: belt.name === 'Preta' ? '#fff' : belt.color }}>
+                Faixa {belt.name}
+              </h3>
+              <p className="mt-3 max-w-md text-lg text-white/70">{belt.text}</p>
+            </motion.div>
           </div>
         </div>
-      </footer>
-    </div>
+      </div>
+    </section>
+  );
+}
+
+function Parents() {
+  return (
+    <section id="pais" className="relative overflow-hidden py-28">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6">
+        <div className="mb-14 grid items-end gap-6 lg:grid-cols-2">
+          <div>
+            <p className="mb-3 text-sm font-semibold uppercase tracking-[0.3em] text-[#E10600]">Para os pais</p>
+            <h2 className="font-display text-4xl font-bold sm:text-5xl">Muito mais que luta</h2>
+          </div>
+          <p className="text-white/65">
+            O jiu-jítsu forma o caráter. Veja o que seu filho leva do tatame para a vida.
+          </p>
+        </div>
+        <div className="grid gap-px overflow-hidden rounded-3xl border border-white/10 bg-white/10 sm:grid-cols-2">
+          {BENEFITS.map((b) => (
+            <div key={b.title} className="group bg-[#140808] p-8 transition-colors hover:bg-[#1d0e0e] sm:p-10">
+              <b.icon className="mb-5 h-8 w-8 text-[#E10600] transition-transform group-hover:scale-110" />
+              <h3 className="font-display text-2xl font-bold">{b.title}</h3>
+              <p className="mt-2 text-white/65">{b.text}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function TrialCta() {
+  const [sent, setSent] = useState(false);
+  return (
+    <section id="aula-experimental" className="relative overflow-hidden py-28">
+      <Parallax distance={90} className="pointer-events-none absolute inset-0">
+        <div className="absolute left-1/2 top-1/2 h-[520px] w-[520px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#E10600]/25 blur-[130px]" />
+      </Parallax>
+      <div className="relative mx-auto max-w-3xl px-4 text-center sm:px-6">
+        <SplitText
+          text="Sua primeira aula é por nossa conta"
+          tag="h2"
+          effect="blur"
+          splitType="words"
+          delay={80}
+          className="font-display text-4xl font-bold sm:text-6xl"
+        />
+        <p className="mx-auto mt-5 max-w-xl text-white/70">
+          Deixe seu contato e a equipe fala com você para agendar uma aula experimental.
+        </p>
+
+        {sent ? (
+          <div className="mx-auto mt-10 max-w-md rounded-2xl border border-[#1F9D55]/40 bg-[#1F9D55]/10 p-6 text-[#7ee2a8]">
+            <Check className="mx-auto mb-2 h-8 w-8" />
+            Recebemos seu contato! (demonstração: na versão final isso cai direto no painel do professor)
+          </div>
+        ) : (
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              setSent(true);
+            }}
+            className="mx-auto mt-10 grid max-w-xl gap-4 text-left sm:grid-cols-2"
+          >
+            <input required placeholder="Seu nome" className="rounded-xl border border-white/15 bg-white/5 px-4 py-3.5 text-white placeholder-white/40 outline-none focus:border-[#E10600]" />
+            <input required type="tel" placeholder="WhatsApp" className="rounded-xl border border-white/15 bg-white/5 px-4 py-3.5 text-white placeholder-white/40 outline-none focus:border-[#E10600]" />
+            <div className="sm:col-span-2">
+              <Magnet magnetStrength={5} padding={50} wrapperClassName="w-full" innerClassName="w-full">
+                <button
+                  type="submit"
+                  className="w-full rounded-xl bg-[#E10600] px-6 py-4 font-semibold text-white shadow-[0_0_40px_-8px_#E10600] hover:bg-[#B80500]"
+                >
+                  Agendar aula experimental
+                </button>
+              </Magnet>
+            </div>
+          </form>
+        )}
+      </div>
+    </section>
+  );
+}
+
+function Footer() {
+  return (
+    <footer className="border-t border-white/10 py-10">
+      <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-4 text-sm text-white/50 sm:flex-row sm:px-6">
+        <div className="flex items-center gap-3">
+          <img src="/logo-vilhena.svg" alt="" className="h-7 w-7 rounded-md" />
+          <span>Equipe Vilhena Jiu-Jitsu · Curitiba</span>
+        </div>
+        <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 hover:text-white">
+          <Instagram className="h-4 w-4" /> @ctvilhenacwb
+        </a>
+      </div>
+    </footer>
+  );
+}
+
+const LandingPage: React.FC = () => {
+  const navigate = useNavigate();
+  const goLogin = () => navigate('/login');
+
+  // The marketing site is dark by design. The app's light theme remaps utilities such as
+  // `text-white`, so pin the dark theme while this page is mounted and restore it on exit.
+  useEffect(() => {
+    const root = document.documentElement;
+    const previous = root.getAttribute('data-theme');
+    root.setAttribute('data-theme', 'dark');
+    return () => {
+      if (previous) root.setAttribute('data-theme', previous);
+    };
+  }, []);
+
+  return (
+    <ClickSpark sparkColor={RED} sparkCount={10} sparkSize={12} sparkRadius={26} duration={500}>
+      <div className="min-h-screen overflow-x-clip bg-[#140808] font-sans text-white antialiased">
+        <Header onLogin={goLogin} />
+        <main>
+          <Hero onLogin={goLogin} />
+          <Ticker />
+          <Manifesto />
+          <Stats />
+          <Programs />
+          <BeltJourney />
+          <Parents />
+          <TrialCta />
+        </main>
+        <Footer />
+      </div>
+    </ClickSpark>
   );
 };
 
