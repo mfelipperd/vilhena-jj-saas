@@ -7,12 +7,12 @@ import { Modal } from '../ui/Modal';
 import { Button } from '../ui/Button';
 import { APP_PREFERENCE_KEYS, readBooleanPreference } from '../../lib/preferences';
 
-const APK_PROMPT_DISMISSED_UNTIL_KEY = 'hamarr:apk-prompt-dismissed-until';
-const DEFAULT_ANDROID_APK_URL = '/downloads/hamarr-app-latest.apk';
+const APK_PROMPT_DISMISSED_UNTIL_KEY = 'vilhena:apk-prompt-dismissed-until';
+const DEFAULT_ANDROID_APK_URL = '/downloads/vilhena-app-latest.apk';
 const LATER_COOLDOWN_MS = 24 * 60 * 60 * 1000; // 24h
 const DOWNLOAD_COOLDOWN_MS = 30 * 24 * 60 * 60 * 1000; // 30d
 
-const ALLOWED_HOSTS = new Set(['hamarr.cl', 'www.hamarr.cl']);
+const ALLOWED_HOSTS = new Set(['suaacademia.com.br', 'www.suaacademia.com.br']);
 
 function isAndroidDevice(): boolean {
   return /android/i.test(navigator.userAgent || '');
@@ -100,7 +100,7 @@ export default function AndroidApkInstallPrompt({ context = 'dashboard' }: Andro
     <Modal
       isOpen={isOpen}
       onClose={closeForLater}
-      title={t('androidInstallPrompt.title', 'Install HAMARR on your Android')}
+      title={t('androidInstallPrompt.title', 'Instale o app da Equipe Vilhena no seu Android')}
       size="md"
       showCloseButton
     >
@@ -109,12 +109,12 @@ export default function AndroidApkInstallPrompt({ context = 'dashboard' }: Andro
           <Smartphone className="mt-0.5 h-5 w-5 text-emerald-400" />
           <div className="text-sm text-gray-200">
             <p className="font-semibold text-white">
-              {t('androidInstallPrompt.heading', 'Get the Android app (.apk)')}
+              {t('androidInstallPrompt.heading', 'Baixe o app Android (.apk)')}
             </p>
             <p className="mt-1 text-gray-300">
               {t(
                 'androidInstallPrompt.body',
-                'You can install the HAMARR app directly on Android for quick access from your home screen.',
+                'Você pode instalar o app da Equipe Vilhena direto no Android para acessar pela tela inicial.',
               )}
             </p>
           </div>

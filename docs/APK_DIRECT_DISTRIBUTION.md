@@ -1,12 +1,12 @@
 # 📦 Direct APK Distribution (No Store)
 
-This project now supports direct Android APK distribution from `hamarr.cl`.
+This project now supports direct Android APK distribution from `suaacademia.com.br`.
 
 ## What is implemented
 
-- After successful login, Android users on `hamarr.cl` get a popup offering APK download.
+- After successful login, Android users on `suaacademia.com.br` get a popup offering APK download.
 - Popup is shown only in authenticated area and only when login just occurred.
-- Download target defaults to `/downloads/hamarr-app-latest.apk`.
+- Download target defaults to `/downloads/vilhena-app-latest.apk`.
 
 ## Files involved
 
@@ -20,7 +20,7 @@ This project now supports direct Android APK distribution from `hamarr.cl`.
 ### Default
 No extra config needed if file is available at:
 
-- `/downloads/hamarr-app-latest.apk`
+- `/downloads/vilhena-app-latest.apk`
 
 ### Custom URL (optional)
 Set:
@@ -29,14 +29,14 @@ Set:
 
 Example:
 
-- `VITE_ANDROID_APK_URL=https://hamarr.cl/downloads/hamarr-app-v1.0.0.apk`
+- `VITE_ANDROID_APK_URL=https://suaacademia.com.br/downloads/vilhena-app-v1.0.0.apk`
 
 ## Operational steps
 
 1. Build/sign APK with your Android flow.
-2. Copy APK to `public/downloads/hamarr-app-latest.apk`.
+2. Copy APK to `public/downloads/vilhena-app-latest.apk`.
 3. Deploy web app.
-4. Login from Android at `hamarr.cl` and verify popup + download.
+4. Login from Android at `suaacademia.com.br` and verify popup + download.
 
 ## Notes
 

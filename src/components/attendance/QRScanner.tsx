@@ -31,7 +31,7 @@ interface ScanResult {
   timestamp?: string;
 }
 
-const QR_CODE_PATTERN = /HAMARR-[A-Z0-9]{6,}/i;
+const QR_CODE_PATTERN = /VILHENA-[A-Z0-9]{6,}/i;
 
 function extractAttendanceCode(rawValue: string): string | null {
   const trimmed = rawValue.trim();

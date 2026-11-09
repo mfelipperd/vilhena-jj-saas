@@ -1,4 +1,6 @@
-# Martial Arts Manager
+# Vilhena JJ SaaS
+
+> SaaS de gestão para academias de jiu-jítsu (Equipe Vilhena). Fork de [electrocicla/martial-arts-manager](https://github.com/electrocicla/martial-arts-manager) (MIT) — crédito ao autor original, licença mantida em `LICENSE`. Documentação do produto: [`docs/PROJETO.md`](docs/PROJETO.md).
 
 [![CI](https://github.com/electrocicla/martial-arts-manager/actions/workflows/ci.yml/badge.svg)](https://github.com/electrocicla/martial-arts-manager/actions/workflows/ci.yml)
 [![CodeQL](https://github.com/electrocicla/martial-arts-manager/actions/workflows/codeql.yml/badge.svg)](https://github.com/electrocicla/martial-arts-manager/actions/workflows/codeql.yml)
@@ -7,15 +9,13 @@
 
 Open-source management platform for martial-arts schools and academies. The project combines a React/TypeScript application with Cloudflare Pages Functions and D1 to manage students, classes, attendance, payments, belt progression, branch operations, and analytics.
 
-**Production:** https://hamarr.cl
-
 **Latest stable release:** `v1.0.1`
 
 ## Why this project exists
 
 Martial-arts schools often need operational software that reflects dojo-specific workflows instead of generic CRM assumptions. Martial Arts Manager provides a reusable OSS implementation for student lifecycle management, class scheduling, QR attendance, payments, belt progression, role-based access, and multi-branch administration.
 
-The repository is actively maintained and the same codebase is used for the live Hamarr deployment.
+This repository is a fork adapted for Equipe Vilhena; upstream credit stays with the original author.
 
 ## Core capabilities
 

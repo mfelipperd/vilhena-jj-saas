@@ -22,7 +22,7 @@ export type DataEventType =
   | 'qrCodes'
   | 'notifications';
 
-const DATA_EVENT = 'hamarr:dataChanged';
+const DATA_EVENT = 'vilhena:dataChanged';
 
 /** Dispatch an invalidation signal for the given resource type. */
 export function dispatchDataEvent(type: DataEventType): void {

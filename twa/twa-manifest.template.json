@@ -1,8 +1,8 @@
 {
-  "packageId": "cl.hamarr.twa",
-  "host": "hamarr.cl",
-  "name": "HAMARR JIU-JITSU",
-  "launcherName": "HAMARR",
+  "packageId": "br.com.vilhena.twa",
+  "host": "suaacademia.com.br",
+  "name": "EQUIPE VILHENA JIU-JITSU",
+  "launcherName": "VILHENA",
   "display": "standalone",
   "themeColor": "#DC2626",
   "navigationColor": "#111827",

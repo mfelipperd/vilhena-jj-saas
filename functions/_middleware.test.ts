@@ -6,7 +6,7 @@ import type { Env } from './types/index';
 const env = {} as Env;
 
 function request(path = '/api/test'): Request {
-  return new Request(`https://hamarr.cl${path}`, { method: 'GET' });
+  return new Request(`https://suaacademia.com.br${path}`, { method: 'GET' });
 }
 
 afterEach(() => {

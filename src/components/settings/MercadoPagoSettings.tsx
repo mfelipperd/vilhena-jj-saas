@@ -243,7 +243,7 @@ export default function MercadoPagoSettings() {
               autoComplete="off"
               value={form.accountEmail ?? ''}
               onChange={(e) => handleChange('accountEmail', e.target.value)}
-              placeholder="hamarr@dojo.cl"
+              placeholder="financeiro@suaacademia.com.br"
             />
           </div>
           <div>
@@ -327,7 +327,7 @@ export default function MercadoPagoSettings() {
               type="url"
               value={form.successUrl ?? ''}
               onChange={(e) => handleChange('successUrl', e.target.value)}
-              placeholder="https://hamarr.cl/payments?mp=success"
+              placeholder="https://suaacademia.com.br/payments?mp=success"
             />
           </div>
 
@@ -340,7 +340,7 @@ export default function MercadoPagoSettings() {
               type="url"
               value={form.failureUrl ?? ''}
               onChange={(e) => handleChange('failureUrl', e.target.value)}
-              placeholder="https://hamarr.cl/payments?mp=failure"
+              placeholder="https://suaacademia.com.br/payments?mp=failure"
             />
           </div>
 
@@ -353,7 +353,7 @@ export default function MercadoPagoSettings() {
               type="url"
               value={form.pendingUrl ?? ''}
               onChange={(e) => handleChange('pendingUrl', e.target.value)}
-              placeholder="https://hamarr.cl/payments?mp=pending"
+              placeholder="https://suaacademia.com.br/payments?mp=pending"
             />
           </div>
 
@@ -366,7 +366,7 @@ export default function MercadoPagoSettings() {
               type="url"
               value={form.notificationUrl ?? ''}
               onChange={(e) => handleChange('notificationUrl', e.target.value)}
-              placeholder="https://hamarr.cl/api/payments/mercadopago/webhook"
+              placeholder="https://suaacademia.com.br/api/payments/mercadopago/webhook"
             />
             <p className="mt-1 text-xs text-gray-400">{t('mercadopago.hints.notificationUrl')}</p>
           </div>

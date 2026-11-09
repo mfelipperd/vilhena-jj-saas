@@ -1,6 +1,6 @@
 # 🔐 Android Release Signing Checklist (Direct APK Distribution)
 
-Use this checklist to produce a **production-signed APK** for direct download from `hamarr.cl`.
+Use this checklist to produce a **production-signed APK** for direct download from `suaacademia.com.br`.
 
 ---
 
@@ -54,19 +54,19 @@ Expected artifact:
 ## 5) Publish for direct download
 
 1. Copy release APK to:
-   - `public/downloads/hamarr-app-latest.apk`
+   - `public/downloads/vilhena-app-latest.apk`
 2. Build/deploy web.
 3. Validate URL:
-   - `https://hamarr.cl/downloads/hamarr-app-latest.apk`
+   - `https://suaacademia.com.br/downloads/vilhena-app-latest.apk`
 
 ---
 
 ## 6) Post-release checks
 
-- Login from Android browser at `hamarr.cl`.
+- Login from Android browser at `suaacademia.com.br`.
 - Confirm APK popup appears after successful login.
 - Download/install APK.
-- Confirm app opens `https://hamarr.cl` and session persists after relaunch.
+- Confirm app opens `https://suaacademia.com.br` and session persists after relaunch.
 
 ---
 

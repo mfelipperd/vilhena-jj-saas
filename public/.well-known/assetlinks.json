@@ -5,7 +5,7 @@
     ],
     "target": {
       "namespace": "android_app",
-      "package_name": "cl.hamarr.twa",
+      "package_name": "br.com.vilhena.twa",
       "sha256_cert_fingerprints": [
         "REPLACE_WITH_RELEASE_SHA256_FINGERPRINT"
       ]
