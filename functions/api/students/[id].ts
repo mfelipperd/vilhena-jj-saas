@@ -6,6 +6,7 @@ import {
   branchErrorResponse,
   resolveRequestBranchId,
 } from '../../utils/branches';
+import { parseVilhenaFields } from '../../utils/studentFields';
 
 interface StudentUpdateRequest {
   name?: string;
@@ -148,6 +149,14 @@ export async function onRequestPut({ request, env, params }: { request: Request;
       is_active: coerceIsActive(raw.is_active) ?? coerceIsActive(raw.isActive),
     };
 
+    const vilhena = parseVilhenaFields(raw);
+    if ('error' in vilhena) {
+      return new Response(JSON.stringify({ error: vilhena.error }), {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+
     // Verify student exists and is accessible
     let checkQuery = 'SELECT id FROM students WHERE id = ? AND branch_id = ? AND deleted_at IS NULL';
     const checkValues: string[] = [studentId, branchId];
@@ -184,6 +193,13 @@ export async function onRequestPut({ request, env, params }: { request: Request;
       'is_active',
       'avatar_url'
     ];
+
+    for (const [column, value] of Object.entries(vilhena)) {
+      if (value !== undefined) {
+        updates.push(`${column} = ?`);
+        values.push(value);
+      }
+    }
 
     allowedFields.forEach(field => {
       if (body[field] !== undefined) {

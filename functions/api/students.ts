@@ -2,6 +2,7 @@ import { Env } from '../types/index';
 import { authenticateUser } from '../middleware/auth';
 import { ensureStudentHasInitialPayment } from '../utils/payment-provisioning';
 import { normalizeAvatarUrl } from '../utils/avatar';
+import { parseVilhenaFields } from '../utils/studentFields';
 import { logAuditAction, getClientIP } from '../utils/db';
 import {
   branchErrorResponse,
@@ -20,6 +21,12 @@ interface StudentRecord {
   date_of_birth?: string;
   emergency_contact_name?: string;
   emergency_contact_phone?: string;
+  guardian_name?: string;
+  bjj_start_date?: string;
+  kimono_size?: string;
+  belt_size?: string;
+  due_day?: number;
+  category?: string;
   avatar_url?: string;
   notes?: string;
   is_active: number;
@@ -125,12 +132,22 @@ export async function onRequestPost({ request, env }: { request: Request; env: E
       dateOfBirth?: string;
       emergencyContactName?: string;
       emergencyContactPhone?: string;
+      guardianName?: string;
+      bjjStartDate?: string;
+      kimonoSize?: string;
+      beltSize?: string;
+      dueDay?: number;
+      category?: string;
       notes?: string;
     };
 
     const branchId = await resolveRequestBranchId(request, env, auth.user);
     const now = new Date().toISOString();
     const { id, name, email, phone, belt, discipline, disciplines, joinDate, dateOfBirth, emergencyContactName, emergencyContactPhone, notes } = body;
+    const extra = parseVilhenaFields(body);
+    if ('error' in extra) {
+      return new Response(JSON.stringify({ error: extra.error }), { status: 400, headers: { 'Content-Type': 'application/json' } });
+    }
 
     if (!id || typeof id !== 'string') {
       return new Response(JSON.stringify({ error: 'Student id is required' }), {
@@ -187,12 +204,15 @@ export async function onRequestPost({ request, env }: { request: Request; env: E
       INSERT INTO students (
         id, name, email, phone, belt, discipline, disciplines, join_date, date_of_birth,
         emergency_contact_name, emergency_contact_phone, notes, is_active,
-        instructor_id, created_by, created_at, updated_at, branch_id
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1, ?, ?, ?, ?, ?)
+        instructor_id, created_by, created_at, updated_at, branch_id,
+        guardian_name, bjj_start_date, kimono_size, belt_size, due_day, category
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `).bind(
       id, name, email, phone || null, belt, discipline, disciplinesJson, joinDate,
       dateOfBirth || null, emergencyContactName || null, emergencyContactPhone || null,
-      notes || null, auth.user.id, auth.user.id, now, now, branchId
+      notes || null, auth.user.id, auth.user.id, now, now, branchId,
+      extra.guardian_name ?? null, extra.bjj_start_date ?? null, extra.kimono_size ?? null,
+      extra.belt_size ?? null, extra.due_day ?? null, extra.category ?? null
     ).run();
 
     await env.DB.prepare(`
@@ -280,6 +300,12 @@ export async function onRequestPut({ request, env }: { request: Request; env: En
       notes?: string;
       is_active?: number;
       avatar_url?: string;
+      guardianName?: string;
+      bjjStartDate?: string;
+      kimonoSize?: string;
+      beltSize?: string;
+      dueDay?: number;
+      category?: string;
     };
 
     const { id, joinDate } = body;
@@ -331,6 +357,13 @@ export async function onRequestPut({ request, env }: { request: Request; env: En
     if (body.dateOfBirth !== undefined) { updates.push('date_of_birth = ?'); values.push(body.dateOfBirth || null); }
     if (body.emergencyContactName !== undefined) { updates.push('emergency_contact_name = ?'); values.push(body.emergencyContactName || null); }
     if (body.emergencyContactPhone !== undefined) { updates.push('emergency_contact_phone = ?'); values.push(body.emergencyContactPhone || null); }
+    const extraUpdate = parseVilhenaFields(body);
+    if ('error' in extraUpdate) {
+      return new Response(JSON.stringify({ error: extraUpdate.error }), { status: 400, headers: { 'Content-Type': 'application/json' } });
+    }
+    for (const [column, value] of Object.entries(extraUpdate)) {
+      if (value !== undefined) { updates.push(`${column} = ?`); values.push(value); }
+    }
     if (body.notes !== undefined) { updates.push('notes = ?'); values.push(body.notes || null); }
     if (body.is_active !== undefined) { updates.push('is_active = ?'); values.push(body.is_active); }
     if (body.avatar_url !== undefined) { updates.push('avatar_url = ?'); values.push(body.avatar_url || null); }
@@ -348,13 +381,13 @@ export async function onRequestPut({ request, env }: { request: Request; env: En
     values.push(now);
 
     await env.DB.prepare(
-      `UPDATE students SET ${updates.join(', ')} WHERE id = ?`
+      `UPDATE students SET ${updates.join(', ')} WHERE id = ? AND branch_id = ?`
     )
-      .bind(...values, id)
+      .bind(...values, id, branchId)
       .run();
 
     // Fetch the updated student to return it
-    const updatedStudent = await env.DB.prepare('SELECT * FROM students WHERE id = ?').bind(id).first<StudentRecord>();
+    const updatedStudent = await env.DB.prepare('SELECT * FROM students WHERE id = ? AND branch_id = ?').bind(id, branchId).first<StudentRecord>();
     const normalizedStudent = updatedStudent
       ? { ...updatedStudent, avatar_url: normalizeAvatarUrl(updatedStudent.avatar_url) }
       : null;

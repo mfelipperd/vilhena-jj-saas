@@ -10,6 +10,8 @@ import { Button } from '../ui/Button';
 import { IconButton } from '../ui/IconButton';
 import { Modal } from '../ui/Modal';
 import { MultiDisciplineEditor, type DisciplineEntry } from './MultiDisciplineEditor';
+import StudentVilhenaFields from './StudentVilhenaFields';
+import { toVilhenaFormData, type VilhenaFieldsValue } from './vilhenaFields';
 
 interface StudentEditModalProps {
   isOpen: boolean;
@@ -28,6 +30,15 @@ export default function StudentEditModal({ isOpen, onClose, student, onSubmit }:
 
   const defaultDiscipline = student.discipline || (availableDisciplines[0] || 'Brazilian Jiu-Jitsu');
   const defaultBelt = student.belt || BELT_RANKINGS[defaultDiscipline as Discipline]?.[0] || 'White';
+
+  const [vilhena, setVilhena] = useState<VilhenaFieldsValue>({
+    guardianName: student.guardian_name || '',
+    bjjStartDate: student.bjj_start_date || '',
+    kimonoSize: student.kimono_size || '',
+    beltSize: student.belt_size || '',
+    dueDay: student.due_day ? String(student.due_day) : '',
+    category: student.category || '',
+  });
 
   const [editStudent, setEditStudent] = useState({
     name: student.name || '',
@@ -125,6 +136,7 @@ export default function StudentEditModal({ isOpen, onClose, student, onSubmit }:
       emergencyContactName: editStudent.emergency_contact_name || undefined,
       emergencyContactPhone: editStudent.emergency_contact_phone || undefined,
       notes: editStudent.notes || undefined,
+      ...toVilhenaFormData(vilhena, true),
     };
 
     const result = await onSubmit(student.id, updateData);
@@ -351,6 +363,8 @@ export default function StudentEditModal({ isOpen, onClose, student, onSubmit }:
                 </div>
               </div>
             </div>
+
+            <StudentVilhenaFields value={vilhena} onChange={setVilhena} />
 
             {/* Additional Notes */}
             <div>

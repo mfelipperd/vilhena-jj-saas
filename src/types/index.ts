@@ -54,6 +54,8 @@ export interface Session {
   userAgent?: string;
 }
 
+export type StudentCategory = 'kids' | 'juvenil' | 'adulto' | 'master';
+
 export interface Student {
   id: string;
   name: string;
@@ -67,6 +69,12 @@ export interface Student {
   date_of_birth?: string;
   emergency_contact_name?: string;
   emergency_contact_phone?: string;
+  guardian_name?: string | null;
+  bjj_start_date?: string | null;
+  kimono_size?: string | null;
+  belt_size?: string | null;
+  due_day?: number | null;
+  category?: StudentCategory | null;
   avatar_url?: string;
   notes?: string;
   is_active: number;
@@ -252,6 +260,12 @@ export interface StudentFormData {
   dateOfBirth?: string;
   emergencyContactName?: string;
   emergencyContactPhone?: string;
+  guardianName?: string;
+  bjjStartDate?: string;
+  kimonoSize?: string;
+  beltSize?: string;
+  dueDay?: number | null;
+  category?: StudentCategory | null;
   notes?: string;
 }
 

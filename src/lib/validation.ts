@@ -50,6 +50,12 @@ export const studentSchema = z.object({
   date_of_birth: z.string().optional(),
   emergency_contact_name: z.string().optional(),
   emergency_contact_phone: z.string().optional(),
+  guardian_name: z.string().max(120).optional(),
+  bjj_start_date: z.string().optional(),
+  kimono_size: z.string().max(10).optional(),
+  belt_size: z.string().max(10).optional(),
+  due_day: z.number().int().min(1).max(31).optional(),
+  category: z.enum(['kids', 'juvenil', 'adulto', 'master']).optional(),
 });
 
 // =====================================
