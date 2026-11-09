@@ -11,15 +11,15 @@ function getSystem(): ResolvedTheme {
 }
 
 function getStoredMode(): ThemeMode {
-  if (typeof window === 'undefined') return 'dark';
+  if (typeof window === 'undefined') return 'light';
   try {
     const v = window.localStorage.getItem(STORAGE_KEY);
     if (v === 'light' || v === 'dark' || v === 'system') return v;
   } catch {
     /* noop */
   }
-  // Default mode: dark — the brand canvas.
-  return 'dark';
+  // Default mode: light (Vilhena theme); dark is opt-in.
+  return 'light';
 }
 
 function applyTheme(resolved: ResolvedTheme) {
