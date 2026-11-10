@@ -1,5 +1,5 @@
-// v6 — handle rejected API fetches gracefully (ERR_FAILED / unhandled promise rejection fix)
-const CACHE_NAME = 'vilhena-pwa-v6';
+// v7 — favicon refresh; v6 — handle rejected API fetches gracefully (ERR_FAILED / unhandled promise rejection fix)
+const CACHE_NAME = 'vilhena-pwa-v7';
 const APP_SHELL = [
   '/',
   '/index.html',
