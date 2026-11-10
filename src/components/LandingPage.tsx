@@ -174,7 +174,7 @@ function Hero({ onLogin }: { onLogin: () => void }) {
       >
         <div className="mb-6 flex justify-center">
           <ShinyText
-            text="EQUIPE VILHENA · JIU-JÍTSU · CURITIBA"
+            text="EQUIPE VILHENA · JIU-JÍTSU · MARABÁ, PA"
             color="#d9a3a0"
             shineColor="#ffffff"
             speed={3}
@@ -474,7 +474,7 @@ function Footer() {
       <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-4 text-sm text-white/50 sm:flex-row sm:px-6">
         <div className="flex items-center gap-3">
           <img src="/logo-vilhena.png" alt="" className="h-8 w-8" />
-          <span>Equipe Vilhena Jiu-Jitsu · Curitiba</span>
+          <span>Equipe Vilhena Jiu-Jitsu · Marabá, PA</span>
         </div>
         <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 hover:text-white">
           <Instagram className="h-4 w-4" /> @ctvilhenacwb
