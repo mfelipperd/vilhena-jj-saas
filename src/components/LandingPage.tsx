@@ -92,7 +92,7 @@ function Header({ onLogin }: { onLogin: () => void }) {
   return (
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
-        solid ? 'bg-[#140808]/80 backdrop-blur-lg border-b border-white/10' : 'bg-transparent'
+        solid ? 'bg-[#140808]/95 border-b border-white/10' : 'bg-transparent'
       }`}
     >
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
@@ -109,7 +109,7 @@ function Header({ onLogin }: { onLogin: () => void }) {
         <Magnet magnetStrength={4} padding={40}>
           <button
             onClick={onLogin}
-            className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-2 text-sm font-medium text-white backdrop-blur hover:bg-white/10"
+            className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-2 text-sm font-medium text-white hover:bg-white/10"
           >
             <LogIn className="h-4 w-4" /> Área do aluno
           </button>
@@ -123,7 +123,7 @@ function Hero({ onLogin }: { onLogin: () => void }) {
   const ref = useRef<HTMLElement>(null);
   const reduce = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] });
-  const smooth = useSpring(scrollYProgress, { stiffness: 80, damping: 25 });
+  const smooth = scrollYProgress;
 
   const watermarkY = useTransform(smooth, [0, 1], [0, 260]);
   const watermarkScale = useTransform(smooth, [0, 1], [1, 1.35]);
@@ -143,8 +143,8 @@ function Hero({ onLogin }: { onLogin: () => void }) {
               raysSpeed={0.9}
               lightSpread={0.9}
               rayLength={1.4}
-              followMouse
-              mouseInfluence={0.12}
+              followMouse={false}
+              maxDevicePixelRatio={1}
               pulsating={false}
               cursorShadow={false}
             />
@@ -155,7 +155,7 @@ function Hero({ onLogin }: { onLogin: () => void }) {
       {/* Layer 2 — slow glow */}
       <motion.div
         style={reduce ? undefined : { y: glowY }}
-        className="pointer-events-none absolute left-1/2 top-1/3 h-[60vh] w-[60vh] -translate-x-1/2 rounded-full bg-[#E10600]/25 blur-[120px]"
+        className="pointer-events-none absolute left-1/2 top-1/3 h-[80vh] w-[80vh] -translate-x-1/2 will-change-transform [background:radial-gradient(closest-side,rgba(225,6,0,0.28),transparent)]"
       />
 
       {/* Layer 3 — giant watermark that drifts and scales on scroll */}
@@ -164,7 +164,7 @@ function Hero({ onLogin }: { onLogin: () => void }) {
         alt=""
         aria-hidden
         style={reduce ? undefined : { y: watermarkY, scale: watermarkScale }}
-        className="pointer-events-none absolute left-1/2 top-1/2 w-[min(90vw,780px)] -translate-x-1/2 -translate-y-1/2 opacity-[0.07] mix-blend-screen"
+        className="pointer-events-none absolute left-1/2 top-1/2 w-[min(90vw,780px)] -translate-x-1/2 -translate-y-1/2 opacity-[0.07] will-change-transform"
       />
 
       {/* Layer 4 — content */}
@@ -244,7 +244,7 @@ function Ticker() {
         color="#140808"
         className="font-display"
         pauseOnHover={false}
-        skewWithVelocity={4}
+        skewWithVelocity={0}
       />
     </section>
   );
@@ -279,8 +279,8 @@ function Stats() {
   return (
     <section className="relative overflow-hidden py-24">
       <Parallax distance={60} className="pointer-events-none absolute inset-0">
-        <div className="absolute -left-20 top-0 h-80 w-80 rounded-full bg-[#E10600]/20 blur-[100px]" />
-        <div className="absolute -right-10 bottom-0 h-80 w-80 rounded-full bg-[#8B0000]/30 blur-[100px]" />
+        <div className="absolute -left-32 -top-20 h-[28rem] w-[28rem] [background:radial-gradient(closest-side,rgba(225,6,0,0.22),transparent)]" />
+        <div className="absolute -bottom-20 -right-24 h-[28rem] w-[28rem] [background:radial-gradient(closest-side,rgba(139,0,0,0.32),transparent)]" />
       </Parallax>
       <div className="relative mx-auto grid max-w-6xl grid-cols-2 gap-10 px-4 sm:px-6 lg:grid-cols-4">
         {items.map((s) => (
@@ -309,6 +309,7 @@ function Programs() {
           <Parallax key={p.title} distance={i % 2 === 0 ? 30 : -30}>
             <SpotlightCard
               spotlightColor="rgba(225, 6, 0, 0.35)"
+              flare={false}
               className="h-full rounded-2xl border border-white/10 bg-white/[0.03] p-7"
             >
               <div className="mb-5 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-[#E10600]/15 text-[#ff5a52]">
@@ -420,7 +421,7 @@ function TrialCta() {
   return (
     <section id="aula-experimental" className="relative overflow-hidden py-28">
       <Parallax distance={90} className="pointer-events-none absolute inset-0">
-        <div className="absolute left-1/2 top-1/2 h-[520px] w-[520px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#E10600]/25 blur-[130px]" />
+        <div className="absolute left-1/2 top-1/2 h-[720px] w-[720px] -translate-x-1/2 -translate-y-1/2 [background:radial-gradient(closest-side,rgba(225,6,0,0.28),transparent)]" />
       </Parallax>
       <div className="relative mx-auto max-w-3xl px-4 text-center sm:px-6">
         <SplitText
