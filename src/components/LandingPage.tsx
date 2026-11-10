@@ -97,7 +97,7 @@ function Header({ onLogin }: { onLogin: () => void }) {
     >
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
         <a href="#topo" className="flex items-center gap-3">
-          <img src="/logo-vilhena.svg" alt="Equipe Vilhena" className="h-9 w-9 rounded-lg" />
+          <img src="/logo-vilhena.png" alt="Equipe Vilhena" className="h-10 w-10" />
           <span className="font-display text-lg font-bold tracking-wide">VILHENA</span>
         </a>
         <nav className="hidden items-center gap-8 text-sm text-white/80 md:flex">
@@ -160,11 +160,11 @@ function Hero({ onLogin }: { onLogin: () => void }) {
 
       {/* Layer 3 — giant watermark that drifts and scales on scroll */}
       <motion.img
-        src="/logo-vilhena-mark.svg"
+        src="/logo-vilhena.png"
         alt=""
         aria-hidden
         style={reduce ? undefined : { y: watermarkY, scale: watermarkScale }}
-        className="pointer-events-none absolute left-1/2 top-1/2 w-[min(90vw,780px)] -translate-x-1/2 -translate-y-1/2 opacity-[0.07] will-change-transform"
+        className="pointer-events-none absolute left-1/2 top-1/2 w-[min(80vw,640px)] -translate-x-1/2 -translate-y-1/2 opacity-[0.07] will-change-transform"
       />
 
       {/* Layer 4 — content */}
@@ -473,7 +473,7 @@ function Footer() {
     <footer className="border-t border-white/10 py-10">
       <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-4 text-sm text-white/50 sm:flex-row sm:px-6">
         <div className="flex items-center gap-3">
-          <img src="/logo-vilhena.svg" alt="" className="h-7 w-7 rounded-md" />
+          <img src="/logo-vilhena.png" alt="" className="h-8 w-8" />
           <span>Equipe Vilhena Jiu-Jitsu · Curitiba</span>
         </div>
         <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 hover:text-white">

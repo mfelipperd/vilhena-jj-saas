@@ -4,7 +4,7 @@ const APP_SHELL = [
   '/',
   '/index.html',
   '/manifest.webmanifest',
-  '/logo-vilhena.svg',
+  '/logo-vilhena.png',
   '/offline.html'
 ];
 

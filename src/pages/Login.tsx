@@ -85,7 +85,7 @@ export default function Login() {
             >
               <div className="w-full h-full rounded-full bg-slate-800 p-2 electric-border">
                 <img 
-                  src="/logo-vilhena.svg" 
+                  src="/logo-vilhena.png" 
                   alt="Equipe Vilhena" 
                   className="w-full h-full object-cover rounded-full"
                 />
